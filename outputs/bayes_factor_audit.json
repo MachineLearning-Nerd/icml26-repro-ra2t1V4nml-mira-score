@@ -1,0 +1,33 @@
+{
+  "observations": 100000,
+  "identity": "E_{y~p_true}[p_candidate(y)/p_true(y)] = 1 for normalized candidate density",
+  "rows": [
+    {
+      "shift": -6,
+      "mean_density_ratio": 0.05106903985142708,
+      "mean_log_density_ratio": -17.984756469726562
+    },
+    {
+      "shift": -3,
+      "mean_density_ratio": 0.9025017023086548,
+      "mean_log_density_ratio": -4.492377758026123
+    },
+    {
+      "shift": 0,
+      "mean_density_ratio": 1.0,
+      "mean_log_density_ratio": 0.0
+    },
+    {
+      "shift": 3,
+      "mean_density_ratio": 0.9357865452766418,
+      "mean_log_density_ratio": -4.507622718811035
+    },
+    {
+      "shift": 6,
+      "mean_density_ratio": 0.054085854440927505,
+      "mean_log_density_ratio": -18.015247344970703
+    }
+  ],
+  "finite_sample_arithmetic_ratio_is_unstable": true,
+  "mean_log_ratio_ranks_zero_shift": true
+}

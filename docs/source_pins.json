@@ -1,0 +1,9 @@
+{
+  "openreview_id": "ra2t1V4nml",
+  "arxiv_id": "2605.02014v1",
+  "arxiv_source_sha256": "93f93308136b7078018639dd75ab58d977994817e2cda7946c96477a3240a184",
+  "primary_pdf_sha256": "430adb66f9a8c8b4b9db5f868e5bf65aab423d1d05e26873f71718b443b03419",
+  "official_repository": "https://github.com/SammyS15/mira-score",
+  "official_commit": "c57487198ac30711783b78ac2af6a76758544483",
+  "official_claims_sha256": "af5ab2d62f786ae36861957cbd08b4188f6d4c86e67152becc661a9c5bbb9d57"
+}

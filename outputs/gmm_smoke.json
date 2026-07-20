@@ -1,0 +1,57 @@
+{
+  "configuration": {
+    "dimensions": 8,
+    "components": 3,
+    "truths": 16,
+    "samples": 32,
+    "regions": 7
+  },
+  "exact_source_scale": false,
+  "construction": {
+    "component_covariance": "identity",
+    "mean_translation": "shift / sqrt(dimensions) in every coordinate",
+    "seed": 260502014,
+    "source_disclosure": "paper source gives dimensions/counts but no GMM construction or script"
+  },
+  "device": "cpu",
+  "rows": [
+    {
+      "shift": -6,
+      "mira": 0.5323660969734192,
+      "mira_region_std": 0.07740436494350433,
+      "mean_bayes_factor": 2.71613916993374e-05,
+      "log_mean_bayes_factor": -10.513713829051305
+    },
+    {
+      "shift": -3,
+      "mira": 0.5962611436843872,
+      "mira_region_std": 0.08226122707128525,
+      "mean_bayes_factor": 0.22784581780433655,
+      "log_mean_bayes_factor": -1.4790862722504623
+    },
+    {
+      "shift": 0,
+      "mira": 0.6888951063156128,
+      "mira_region_std": 0.05760575830936432,
+      "mean_bayes_factor": 1.0,
+      "log_mean_bayes_factor": 7.618617292592944e-09
+    },
+    {
+      "shift": 3,
+      "mira": 0.630859375,
+      "mira_region_std": 0.06289547681808472,
+      "mean_bayes_factor": 2.0805673599243164,
+      "log_mean_bayes_factor": 0.7326407508742325
+    },
+    {
+      "shift": 6,
+      "mira": 0.5212053656578064,
+      "mira_region_std": 0.06465432047843933,
+      "mean_bayes_factor": 0.02032124437391758,
+      "log_mean_bayes_factor": -3.8960884733307846
+    }
+  ],
+  "zero_shift_best": true,
+  "absolute_shift_monotone": true,
+  "runtime_seconds": 0.01769333495758474
+}

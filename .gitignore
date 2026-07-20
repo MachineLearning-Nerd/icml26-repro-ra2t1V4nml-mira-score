@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+*.pyo
+.env
+.trackio/local/
+data/
+outputs/*.pt
+outputs/*.npy
+outputs/*.npz
+outputs/*.parquet
+upstream/.git/

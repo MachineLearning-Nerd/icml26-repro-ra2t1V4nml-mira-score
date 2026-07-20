@@ -1,0 +1,57 @@
+{
+  "configuration": {
+    "dimensions": 100,
+    "components": 20,
+    "truths": 5000,
+    "samples": 5000,
+    "regions": 100
+  },
+  "exact_source_scale": true,
+  "construction": {
+    "component_covariance": "identity",
+    "mean_translation": "shift / sqrt(dimensions) in every coordinate",
+    "seed": 260502018,
+    "source_disclosure": "paper source gives dimensions/counts but no GMM construction or script"
+  },
+  "device": "cuda",
+  "rows": [
+    {
+      "shift": -6,
+      "mira": 0.6519337296485901,
+      "mira_region_std": 0.0035612136125564575,
+      "mean_bayes_factor": 0.042078375816345215,
+      "log_mean_bayes_factor": -3.168221347696756
+    },
+    {
+      "shift": -3,
+      "mira": 0.6641526818275452,
+      "mira_region_std": 0.002980293706059456,
+      "mean_bayes_factor": 0.8131952881813049,
+      "log_mean_bayes_factor": -0.2067836455178007
+    },
+    {
+      "shift": 0,
+      "mira": 0.6664938926696777,
+      "mira_region_std": 0.0032157497480511665,
+      "mean_bayes_factor": 1.0,
+      "log_mean_bayes_factor": -3.508400663321254e-07
+    },
+    {
+      "shift": 3,
+      "mira": 0.6643236875534058,
+      "mira_region_std": 0.002780543640255928,
+      "mean_bayes_factor": 0.6772179007530212,
+      "log_mean_bayes_factor": -0.3897622755837187
+    },
+    {
+      "shift": 6,
+      "mira": 0.6522493362426758,
+      "mira_region_std": 0.003687256248667836,
+      "mean_bayes_factor": 0.0075141675770282745,
+      "log_mean_bayes_factor": -4.890964858896707
+    }
+  ],
+  "zero_shift_best": true,
+  "absolute_shift_monotone": true,
+  "runtime_seconds": 228.236565713
+}

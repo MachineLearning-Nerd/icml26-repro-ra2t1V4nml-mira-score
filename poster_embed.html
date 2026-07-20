@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Inter, Arial, sans-serif; color: #eef5ff; background: #0a1626; }
+  main { padding: 28px; background: linear-gradient(135deg, #102c4f, #0a1626 55%, #173b36); }
+  h1 { margin: 0 0 7px; font-size: 27px; letter-spacing: -.4px; }
+  .sub { color: #b8c7db; margin-bottom: 20px; }
+  .claims { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .claim { background: rgba(255,255,255,.08); border: 1px solid rgba(151,211,255,.35); border-radius: 12px; padding: 14px; }
+  .ok { color: #7ef0b2; font-weight: 800; font-size: 14px; }
+  h2 { margin: 8px 0; font-size: 16px; }
+  p { margin: 0; line-height: 1.4; color: #d8e5f5; font-size: 13px; }
+  .metric { display: flex; margin-top: 18px; gap: 18px; align-items: center; }
+  .score { font-size: 38px; color: #7ef0b2; font-weight: 800; white-space: nowrap; }
+  .note { border-left: 3px solid #ffd166; padding-left: 12px; color: #f5e6ba; }
+</style>
+</head>
+<body><main>
+  <h1>MIRA: conditional-distribution accuracy and model comparison</h1>
+  <div class="sub">Full-scale, five-seed reproduction • arXiv 2605.02014 • OpenReview ra2t1V4nml</div>
+  <section class="claims">
+    <div class="claim"><div class="ok">✓ CLAIM 1</div><h2>Estimator parity</h2><p>Clean-room random-ball scorer matches the released implementation: mean Δ = 0; s.d. Δ = 2.24×10⁻⁸.</p></div>
+    <div class="claim"><div class="ok">✓ CLAIM 2</div><h2>Null-law reference</h2><p>Exact finite enumeration at N=5,000 gives mean error 6.66×10⁻⁵ to 2/3 and variance error 1.11×10⁻⁵ to 1/18.</p></div>
+    <div class="claim"><div class="ok">✓ CLAIM 3</div><h2>Model comparison</h2><p>All five source-scale GMM seeds rank zero shift best; mean nearest-shift margin = 0.002172 (8.30 SEM).</p></div>
+  </section>
+  <section class="metric"><div class="score">6 / 6</div><p>100 dimensions • 20 mixture components • 5,000 truths • 5,000 samples per truth • 100 regions • five T4 Jobs</p></section>
+  <p class="note">Caveat: the source does not release GMM construction details or an experiment script. This reproduction makes its isotropic, seeded construction explicit; an independent control finds high-dimensional arithmetic density-ratio averages unstable, so the verified result is direct MIRA ranking.</p>
+</main></body></html>

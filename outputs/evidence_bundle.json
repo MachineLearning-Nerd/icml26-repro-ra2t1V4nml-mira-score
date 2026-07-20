@@ -1,0 +1,28 @@
+{
+  "artifacts": {
+    "bayes_factor_audit.json": "36eba1470cf77e5e4af84c9a10be860237d1fd62a68690f76a08a65b4759dc14",
+    "claim_verification.json": "377a08cdb843d6ed19dc7afef7f94175207f6883af812222b54daf391dbc446a",
+    "claims_1_2.json": "aabe518ba8ac5b3e824899844d3896526fbf57e5f2e6ccdb44122cbd45bc14f5",
+    "full_gmm_aggregate.json": "00ffe3e6504513c5c72ffd1f0f274c58d3c68bada95da1ac7c26c4522b6cd88e",
+    "source_audit.json": "aa1380a23b7423ae05a3bc12be6902d29e2f73958a2faadf01b46bb8032ca026",
+    "test_results.json": "27a7e1abc186f8cfe932eca27cdecb53baee4db20a8e961cadc794e0f13e16bd"
+  },
+  "claim_count": 3,
+  "earned_points": 6,
+  "full_gmm_readbacks": {
+    "gmm_bayes_factor.json": "daee3e6c2678a4cc6914927294baaff41496629431dd896f3a26cfaa606a8b93",
+    "seed-260502015.json": "be6effd73cfe6f7a39ade66f7f2a28ceae2751718c544332a6aae9b40e73fffc",
+    "seed-260502016.json": "8966d3816a1fc9fcb779034e0e1eab50838274a17cebc0bcac3f71eee72a5608",
+    "seed-260502017.json": "2be69c9d3cbab9f09a2c62186ce36f540d332ab28ca2e5b83306090ca21760a3",
+    "seed-260502018.json": "14a565f9efb0920d37834cd59fa37ae65212ae99f5f4f07b32fa4d71c5c7dac8"
+  },
+  "gate": "FULL_GATE_READY",
+  "jobs": [
+    "https://huggingface.co/jobs/DineshAI/6a5de5e0d216bd6f3a2031f7",
+    "https://huggingface.co/jobs/DineshAI/6a5de7a9bee6ee1cf4ed22e1",
+    "https://huggingface.co/jobs/DineshAI/6a5de7a8bee6ee1cf4ed22dd",
+    "https://huggingface.co/jobs/DineshAI/6a5de7a9bee6ee1cf4ed22e2",
+    "https://huggingface.co/jobs/DineshAI/6a5de7a8bee6ee1cf4ed22df"
+  ],
+  "paper": "ra2t1V4nml"
+}

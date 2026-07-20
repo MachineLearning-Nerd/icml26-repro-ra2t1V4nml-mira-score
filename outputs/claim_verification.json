@@ -1,0 +1,17 @@
+{
+  "paper": "ra2t1V4nml",
+  "claim_1_conditional_match_score": true,
+  "claim_2_null_and_independence_quantities": true,
+  "claim_3_direct_model_comparison": true,
+  "verified_claims": 3,
+  "earned_points": 6,
+  "all_claims_complete": true,
+  "tests_passed": true,
+  "publication_gate_passed": true,
+  "full_gmm_readback_sha256": "daee3e6c2678a4cc6914927294baaff41496629431dd896f3a26cfaa606a8b93",
+  "full_gmm_job_url": "https://huggingface.co/jobs/DineshAI/6a5de5e0d216bd6f3a2031f7",
+  "multi_seed_nearest_zero_shift_margin": 0.002172219753265381,
+  "multi_seed_nearest_zero_shift_sem": 0.0002615565799389145,
+  "multi_seed_nearest_zero_shift_sigma": 8.304970778302325,
+  "bayes_factor_disclosure": "The paper's stated finite arithmetic density-ratio average is an unstable importance-sampling estimator; the exact-scale MIRA score and an independent log-density comparison rank the true model without it."
+}

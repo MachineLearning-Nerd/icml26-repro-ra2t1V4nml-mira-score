@@ -1,0 +1,11 @@
+{
+  "dimensions": 100,
+  "components": 20,
+  "shifts": [-6, -3, 0, 3, 6],
+  "truth_samples": 5000,
+  "posterior_samples": 5000,
+  "regions": 100,
+  "precision": "float32",
+  "hardware": "t4-small",
+  "execution": "streamed, exact-scale"
+}

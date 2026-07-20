@@ -1,0 +1,84 @@
+{
+  "official_independent_max_abs_delta": 0.0,
+  "official_independent_std_delta": 2.2351741790771484e-08,
+  "source_parity_passed": true,
+  "finite_null_cells": {
+    "1": {
+      "probability_total": 1.0,
+      "mean": 0.5555555555555556,
+      "variance": 0.024691358024691357,
+      "mean_error_to_two_thirds": 0.11111111111111105,
+      "variance_error_to_one_over_18": 0.030864197530864196
+    },
+    "2": {
+      "probability_total": 1.0,
+      "mean": 0.5833333333333334,
+      "variance": 0.034722222222222224,
+      "mean_error_to_two_thirds": 0.08333333333333326,
+      "variance_error_to_one_over_18": 0.02083333333333333
+    },
+    "5": {
+      "probability_total": 1.0,
+      "mean": 0.6190476190476191,
+      "variance": 0.045351473922902494,
+      "mean_error_to_two_thirds": 0.04761904761904756,
+      "variance_error_to_one_over_18": 0.010204081632653059
+    },
+    "25": {
+      "probability_total": 1.0,
+      "mean": 0.654320987654321,
+      "variance": 0.053345526596555407,
+      "mean_error_to_two_thirds": 0.012345679012345623,
+      "variance_error_to_one_over_18": 0.002210028959000146
+    },
+    "100": {
+      "probability_total": 1.0,
+      "mean": 0.6633986928104575,
+      "variance": 0.055000213593062494,
+      "mean_error_to_two_thirds": 0.0032679738562091387,
+      "variance_error_to_one_over_18": 0.0005553419624930583
+    },
+    "1000": {
+      "probability_total": 1.0,
+      "mean": 0.666333998669328,
+      "variance": 0.05550000022133599,
+      "mean_error_to_two_thirds": 0.0003326679973386648,
+      "variance_error_to_one_over_18": 5.555533421956055e-05
+    },
+    "5000": {
+      "probability_total": 1.0,
+      "mean": 0.6666000266560043,
+      "variance": 0.0555444444462208,
+      "mean_error_to_two_thirds": 6.664001066236658e-05,
+      "variance_error_to_one_over_18": 1.1111109334750735e-05
+    }
+  },
+  "finite_null_probability_normalized": true,
+  "asymptotic_reference_convergence": true,
+  "equation_cells": [
+    {
+      "N": 5,
+      "n": 0,
+      "k": 0,
+      "value": 0.8571428571428571
+    },
+    {
+      "N": 5,
+      "n": 2,
+      "k": 1,
+      "value": 0.42857142857142855
+    },
+    {
+      "N": 5,
+      "n": 5,
+      "k": 0,
+      "value": 0.14285714285714285
+    },
+    {
+      "N": 100,
+      "n": 37,
+      "k": 1,
+      "value": 0.37254901960784315
+    }
+  ]
+}

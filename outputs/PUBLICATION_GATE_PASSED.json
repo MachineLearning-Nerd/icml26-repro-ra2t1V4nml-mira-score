@@ -1,0 +1,11 @@
+{
+  "gate": "FULL_GATE_READY",
+  "queue_marker": "FULL_GATE_READY: ra2t1V4nml",
+  "paper": "ra2t1V4nml",
+  "evidence_bundle_sha256": "45900c386883aa0358c5a20389205b75c11194143fb8b4c0efb08b9871acf6ec",
+  "claim_verification_sha256": "377a08cdb843d6ed19dc7afef7f94175207f6883af812222b54daf391dbc446a",
+  "claims_complete": true,
+  "earned_points": 6,
+  "tests_passed": true,
+  "publication_gate_passed": true
+}

@@ -1,0 +1,24 @@
+{
+  "seed_file_count": 5,
+  "files": [
+    "gmm_bayes_factor.json",
+    "seed-260502015.json",
+    "seed-260502016.json",
+    "seed-260502017.json",
+    "seed-260502018.json"
+  ],
+  "all_zero_shift_best": true,
+  "all_absolute_shift_monotone": true,
+  "nearest_shift_margins": [
+    0.001290738582611084,
+    0.0029351115226745605,
+    0.0022013187408447266,
+    0.0022637248039245605,
+    0.0021702051162719727
+  ],
+  "mean_nearest_shift_margin": 0.002172219753265381,
+  "std_nearest_shift_margin": 0.0005848582927057707,
+  "sem_nearest_shift_margin": 0.0002615565799389145,
+  "three_sem_separation": true,
+  "mean_runtime_seconds": 228.70131868419998
+}
