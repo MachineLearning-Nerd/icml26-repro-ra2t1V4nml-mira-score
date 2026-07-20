@@ -2,7 +2,7 @@
 
 - Paper: `ra2t1V4nml` — *MIRA: A Score for Conditional Distribution Accuracy and Model Comparison*
 - Owner: `codex-mira-three-claims`
-- State: `publication_ready`
+- State: `publication_queued`
 - Effective contract: 3 live claims / 6 possible points
 - Primary source: arXiv `2605.02014v1`, source archive SHA-256
   `93f93308136b7078018639dd75ab58d977994817e2cda7946c96477a3240a184`
@@ -29,7 +29,10 @@ experiment rerun.
 
 ## Next action
 
-Create and push the public GitHub evidence repository. Only after the first
-push succeeds, atomically enqueue this gate-complete directory through the
-canonical shared Hugging Face backlog; the shared drain, not this session, owns
-Space publication and public readback.
+Public GitHub evidence repository: `MachineLearning-Nerd/icml26-repro-ra2t1V4nml-mira-score`
+at initial evidence commit `1dd53e8`. The complete gate was atomically added to
+the canonical shared Hugging Face backlog as entry `67` (68 entries currently
+in the backlog). The shared drain owns Space creation and will publish to the
+canonical `DineshAI/ra2t1V4nml` target when quota permits; this session must not
+publish directly. Next: await the drain's public Space readback and record its
+commit, required tags, and artifact-bucket verification here.
