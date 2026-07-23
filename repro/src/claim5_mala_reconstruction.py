@@ -63,7 +63,7 @@ class Protocol:
 PROTOCOL = Protocol(
     truths=1,
     walkers=100,
-    burnin_steps=200,
+    burnin_steps=1000,
     sampling_steps=200,
     regions=100,
 )
@@ -659,6 +659,7 @@ def main() -> None:
         "limitations": [
             "This is a one-truth sampler and runtime profile, not Claim 5 evidence.",
             "The paper does not release the fixed source nuisance values; this profile uses a disclosed cited-distribution regime.",
+            "Burn-in is conservatively extended from the paper's 200 steps to 1000; production remains exactly N=20,000.",
             "A child must run L=100, N=20,000, 100 regions, and both nuisance regimes before any terminal verdict.",
         ],
     }
