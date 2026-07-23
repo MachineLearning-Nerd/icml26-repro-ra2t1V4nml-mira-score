@@ -118,7 +118,69 @@ def log_density_and_gradient(
     return log_density.detach(), gradient.detach()
 
 
-def map_and_diagonal_mass(
+def gauss_newton_precision(
+    state: torch.Tensor,
+    *,
+    lens_type: str,
+    source_count: int,
+    nuisance_regime: dict[str, object],
+    protocol: Protocol,
+) -> torch.Tensor:
+    """Return the local positive Gauss--Newton precision in logit space."""
+    dimension = state.numel()
+    delta = 0.002
+    perturbed = state.repeat(2 * dimension, 1)
+    indices = torch.arange(dimension)
+    perturbed[indices, indices] -= delta
+    perturbed[dimension + indices, indices] += delta
+    parameters = embed_candidate_parameters(
+        perturbed.sigmoid(),
+        lens_type=lens_type,
+        source_count=source_count,
+    )
+    predictions = simulate(
+        parameters,
+        lens_type=lens_type,
+        source_count=source_count,
+        nuisance_regime=nuisance_regime,
+        pixels=protocol.pixels,
+        pixelscale=protocol.pixelscale,
+        iterations=protocol.epl_iterations,
+    )
+    jacobian = (
+        predictions[dimension:] - predictions[:dimension]
+    ).reshape(dimension, -1) / (2 * delta * protocol.noise_sigma)
+    unit = state.sigmoid()
+    prior_precision = 2.0 * unit * (1.0 - unit)
+    precision = jacobian @ jacobian.T + torch.diag(prior_precision)
+    return 0.5 * (precision + precision.T)
+
+
+def regularize_precision(
+    precision: torch.Tensor,
+) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
+    eigenvalues, eigenvectors = torch.linalg.eigh(precision)
+    maximum = eigenvalues.max().clamp_min(1.0)
+    floor = maximum * 1.0e-7
+    regularized_eigenvalues = eigenvalues.clamp(min=floor, max=1.0e10)
+    regularized = (
+        eigenvectors
+        @ torch.diag(regularized_eigenvalues)
+        @ eigenvectors.T
+    )
+    mass = (
+        eigenvectors
+        @ torch.diag(regularized_eigenvalues.reciprocal())
+        @ eigenvectors.T
+    )
+    mass = 0.5 * (mass + mass.T)
+    cholesky = torch.linalg.cholesky(
+        mass + torch.eye(mass.shape[0]) * 1.0e-10
+    )
+    return regularized, mass, cholesky, regularized_eigenvalues
+
+
+def map_and_full_mass(
     observation: torch.Tensor,
     *,
     lens_type: str,
@@ -126,8 +188,8 @@ def map_and_diagonal_mass(
     nuisance_regime: dict[str, object],
     protocol: Protocol,
     generator: torch.Generator,
-) -> tuple[torch.Tensor, torch.Tensor, dict[str, object]]:
-    """Data-only multi-start MAP and local-curvature MALA preconditioner."""
+) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, dict[str, object]]:
+    """Data-only multi-start MAP and full Gauss--Newton preconditioner."""
     dimension = active_dimension(lens_type, source_count)
     search_unit = 0.01 + 0.98 * torch.rand(
         (64, dimension), generator=generator
@@ -166,7 +228,7 @@ def map_and_diagonal_mass(
         )
         state = state.clamp(-7.0, 7.0)
 
-    optimized_density, optimized_gradient = log_density_and_gradient(
+    optimized_density, _ = log_density_and_gradient(
         state,
         observation,
         lens_type=lens_type,
@@ -176,41 +238,105 @@ def map_and_diagonal_mass(
     )
     best = int(torch.argmax(optimized_density))
     map_state = state[best].clone()
-    map_gradient = optimized_gradient[best]
 
-    delta = 0.005
-    perturbed = map_state.repeat(2 * dimension, 1)
-    indices = torch.arange(dimension)
-    perturbed[indices, indices] -= delta
-    perturbed[dimension + indices, indices] += delta
-    _, perturbed_gradient = log_density_and_gradient(
-        perturbed,
+    # Refine the best Adam point with damped Gauss--Newton steps. This uses only
+    # the observation and candidate likelihood; no simulated truth is exposed.
+    damping = 1.0e-3
+    gn_iterations = 0
+    accepted_gn_steps = 0
+    for iteration in range(30):
+        density, gradient = log_density_and_gradient(
+            map_state[None, :],
+            observation,
+            lens_type=lens_type,
+            source_count=source_count,
+            nuisance_regime=nuisance_regime,
+            protocol=protocol,
+        )
+        precision = gauss_newton_precision(
+            map_state,
+            lens_type=lens_type,
+            source_count=source_count,
+            nuisance_regime=nuisance_regime,
+            protocol=protocol,
+        )
+        eye = torch.eye(dimension)
+        direction = torch.linalg.solve(
+            precision + damping * eye, gradient[0]
+        )
+        direction_norm = torch.linalg.vector_norm(direction)
+        if direction_norm > 1.0:
+            direction = direction / direction_norm
+        candidates = torch.stack(
+            [
+                (map_state + scale * direction).clamp(-9.0, 9.0)
+                for scale in (1.0, 0.5, 0.25, 0.125, 0.0625)
+            ]
+        )
+        candidate_density, _ = log_density_and_gradient(
+            candidates,
+            observation,
+            lens_type=lens_type,
+            source_count=source_count,
+            nuisance_regime=nuisance_regime,
+            protocol=protocol,
+        )
+        candidate_best = int(torch.argmax(candidate_density))
+        gn_iterations = iteration + 1
+        if candidate_density[candidate_best] > density[0]:
+            map_state = candidates[candidate_best]
+            damping = max(damping / 3.0, 1.0e-8)
+            accepted_gn_steps += 1
+        else:
+            damping = min(damping * 10.0, 1.0e8)
+        preconditioned_norm = torch.sqrt(
+            torch.clamp(gradient[0] @ direction, min=0.0)
+        )
+        if preconditioned_norm < 1.0e-2:
+            break
+
+    optimized_density, optimized_gradient = log_density_and_gradient(
+        map_state[None, :],
         observation,
         lens_type=lens_type,
         source_count=source_count,
         nuisance_regime=nuisance_regime,
         protocol=protocol,
     )
-    curvature = (
-        perturbed_gradient[indices, indices]
-        - perturbed_gradient[dimension + indices, indices]
-    ) / (2 * delta)
-    # A positive local precision is required by MALA. Absolute curvature is a
-    # conservative fallback for weakly identified directions at a nonquadratic
-    # misspecified-model optimum.
-    precision = curvature.abs().clamp(1.0e2, 1.0e8)
-    mass = 1.0 / precision
+    precision = gauss_newton_precision(
+        map_state,
+        lens_type=lens_type,
+        source_count=source_count,
+        nuisance_regime=nuisance_regime,
+        protocol=protocol,
+    )
+    precision, mass, cholesky, eigenvalues = regularize_precision(precision)
+    preconditioned_gradient_norm = torch.sqrt(
+        torch.clamp(
+            optimized_gradient[0] @ mass @ optimized_gradient[0], min=0.0
+        )
+    )
     diagnostics = {
         "map_prior_search_log_density": first_density,
-        "map_optimized_log_density": float(optimized_density[best]),
-        "map_gradient_norm": float(torch.linalg.vector_norm(map_gradient)),
-        "mass_diagonal_min": float(mass.min()),
-        "mass_diagonal_max": float(mass.max()),
+        "map_optimized_log_density": float(optimized_density[0]),
+        "map_gradient_norm": float(
+            torch.linalg.vector_norm(optimized_gradient[0])
+        ),
+        "map_preconditioned_gradient_norm": float(
+            preconditioned_gradient_norm
+        ),
+        "precision_eigenvalue_min": float(eigenvalues.min()),
+        "precision_eigenvalue_max": float(eigenvalues.max()),
+        "precision_condition_number": float(
+            eigenvalues.max() / eigenvalues.min()
+        ),
         "map_starts": 64,
         "map_optimized_starts": 8,
         "map_iterations": 80,
+        "gauss_newton_iterations": gn_iterations,
+        "gauss_newton_accepted_steps": accepted_gn_steps,
     }
-    return map_state, mass, diagnostics
+    return map_state, precision, mass, cholesky, diagnostics
 
 
 def mala(
@@ -224,7 +350,7 @@ def mala(
 ) -> tuple[torch.Tensor, dict[str, object]]:
     generator = torch.Generator(device="cpu").manual_seed(seed)
     dimension = active_dimension(lens_type, source_count)
-    map_state, mass, map_diagnostics = map_and_diagonal_mass(
+    map_state, precision, mass, cholesky, map_diagnostics = map_and_full_mass(
         observation,
         lens_type=lens_type,
         source_count=source_count,
@@ -232,8 +358,11 @@ def mala(
         protocol=protocol,
         generator=generator,
     )
-    state = map_state[None, :] + 0.5 * mass.sqrt()[None, :] * torch.randn(
-        (protocol.walkers, dimension), generator=generator
+    state = map_state[None, :] + 0.05 * (
+        torch.randn(
+            (protocol.walkers, dimension), generator=generator
+        )
+        @ cholesky.T
     )
 
     log_density, gradient = log_density_and_gradient(
@@ -254,14 +383,16 @@ def mala(
     total_steps = protocol.burnin_steps + protocol.sampling_steps
     for step in range(total_steps):
         step_size = math.exp(log_step_size)
-        drift = 0.5 * step_size**2 * gradient * mass
+        drift = 0.5 * step_size**2 * (gradient @ mass)
         proposed = (
             state
             + drift
             + step_size
-            * mass.sqrt()
-            * torch.randn(
+            * (
+                torch.randn(
                 state.shape, dtype=state.dtype, generator=generator
+                )
+                @ cholesky.T
             )
         )
         proposed_density, proposed_gradient = log_density_and_gradient(
@@ -272,13 +403,23 @@ def mala(
             nuisance_regime=nuisance_regime,
             protocol=protocol,
         )
-        proposed_drift = 0.5 * step_size**2 * proposed_gradient * mass
-        forward = -0.5 * (
-            (proposed - state - drift) ** 2 / mass
-        ).sum(dim=1) / step_size**2
-        reverse = -0.5 * (
-            (state - proposed - proposed_drift) ** 2 / mass
-        ).sum(dim=1) / step_size**2
+        proposed_drift = 0.5 * step_size**2 * (proposed_gradient @ mass)
+        forward_residual = proposed - state - drift
+        reverse_residual = state - proposed - proposed_drift
+        forward = (
+            -0.5
+            * torch.einsum(
+                "bi,ij,bj->b", forward_residual, precision, forward_residual
+            )
+            / step_size**2
+        )
+        reverse = (
+            -0.5
+            * torch.einsum(
+                "bi,ij,bj->b", reverse_residual, precision, reverse_residual
+            )
+            / step_size**2
+        )
         log_acceptance = proposed_density - log_density + reverse - forward
         accepted = (
             torch.log(torch.rand(protocol.walkers, generator=generator))
