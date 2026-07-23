@@ -30,6 +30,8 @@ BASELINE_STEPS = (
     "repro/src/claim6_galaxy_images.py",
     "repro/src/check_claim6_independent.py",
     "repro/src/verify_claim6.py",
+    "repro/src/claim5_mala_reconstruction.py",
+    "repro/src/verify_claim5_profile.py",
     "repro/src/claim5_release_audit.py",
     "repro/src/check_claim5_independent.py",
     "repro/src/verify_claim5.py",
