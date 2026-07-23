@@ -13,12 +13,17 @@ OUT = ROOT / "outputs"
 INCLUDE = (
     "README.md",
     "STATUS.md",
+    "pyproject.toml",
+    "uv.lock",
     "poster_embed.html",
     ".openresearch",
     "docs",
     "repro",
     "upstream",
     "outputs",
+    "reports",
+    "notebooks",
+    "release",
 )
 EXCLUDE_NAMES = {"reproduction_bundle.zip", "reproduction_bundle_manifest.json"}
 

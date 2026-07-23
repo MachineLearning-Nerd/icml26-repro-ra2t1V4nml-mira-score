@@ -1,0 +1,23 @@
+{
+  "claim_id": 6,
+  "verdict": "VERIFIED",
+  "assertions": {
+    "contract_requires_verified": true,
+    "exact_author_commit": true,
+    "all_protected_hashes_match": true,
+    "paper_scale_L_16": true,
+    "paper_scale_N_64": true,
+    "paper_scale_dimensions_12288": true,
+    "paper_scale_regions_100": true,
+    "released_default_norm_false": true,
+    "model_order_matches_paper": true,
+    "independent_checker_passed": true,
+    "full_scale_released_implementation_parity": true,
+    "all_misspecification_differences_positive_at_95pct": true,
+    "negative_control_sensitive": true,
+    "cpu_only": true,
+    "pinned_environment": true,
+    "static_evidence_present": true
+  },
+  "evidence_standard": "exact released full-dimensional tensors, released score semantics, paired two-axis bootstrap, independent CSV aggregation, and broken-pairing negative control"
+}

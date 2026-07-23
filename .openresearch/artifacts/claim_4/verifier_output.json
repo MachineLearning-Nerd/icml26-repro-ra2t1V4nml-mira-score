@@ -1,0 +1,17 @@
+{
+  "claim_id": 4,
+  "verdict": "VERIFIED",
+  "assertions": {
+    "contract_requires_verified": true,
+    "all_exact_cells_at_or_above_half": true,
+    "paper_N_64_present": true,
+    "paper_N_20000_present": true,
+    "source_dimensions_present": true,
+    "independent_checker_passed": true,
+    "independent_checker_exhaustive_count": true,
+    "negative_control_rejects_removed_assumption": true,
+    "environment_is_pinned": true,
+    "static_audit_files_present": true
+  },
+  "evidence_standard": "exact analytic identity plus independent exhaustive rational-grid check"
+}

@@ -1,4 +1,21 @@
-# Status
+# Status — six-claim release candidate
+
+- Baseline live-judge score: `7/12`
+- Current terminal evidence: Claims 1–4 and 6 `VERIFIED`; Claim 5 `BLOCKED`
+- Publication state: **not published; explicit approval required**
+- Score increase claimed: **no**
+- Compute for new campaign: local Apple-arm CPU, $0; no GPU, no HF CPU fallback
+- Winning lineage: `orx/cumulative-release-candidate-and-report`
+- Fixed command: `uv run --frozen python repro/src/run_campaign.py`
+- Detailed report: `reports/mira-reproduction/report.md`
+- Tutorial: `notebooks/mira_reproduction.py`
+- Space candidate: `release/space_candidate/`
+- Text upload allowlist: `release/text_upload_allowlist.txt`
+
+The prior three-claim gate below is retained as historical context and is
+superseded by `.openresearch/artifacts/campaign_verdicts.json`.
+
+# Prior status
 
 - Paper: `ra2t1V4nml` — *MIRA: A Score for Conditional Distribution Accuracy and Model Comparison*
 - Owner: `codex-mira-three-claims`

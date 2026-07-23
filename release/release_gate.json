@@ -1,0 +1,19 @@
+{
+  "release_candidate_ready": true,
+  "publication_approved": false,
+  "publication_performed": false,
+  "score_increase_claimed": false,
+  "target_space_id": "DineshAI/ra2t1V4nml",
+  "old_file_set_is_subset": true,
+  "old_page_files_byte_identical": true,
+  "candidate_logbook_valid": true,
+  "report_figures_valid": 5,
+  "marimo_check_passed": true,
+  "text_upload_file_count": 46,
+  "secret_findings": [],
+  "verdicts": {
+    "4": "VERIFIED",
+    "5": "BLOCKED",
+    "6": "VERIFIED"
+  }
+}

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Claim 6 paper and observed MIRA scores</title>
+  <desc id="desc">The observed scores reproduce the paper order but differ numerically, most strongly for the noise-only shift.</desc>
+  <rect width="1200" height="675" rx="28" fill="#f5f8fb"/>
+  <text x="62" y="72" fill="#10283a" font-family="Arial,sans-serif" font-size="38" font-weight="700">Claim 6: order reproduced, numbers not identical</text>
+  <text x="62" y="108" fill="#527084" font-family="Arial,sans-serif" font-size="19">L=16 · N=64 · d=12,288 · 100 regions · author tensor hashes verified</text>
+  <g font-family="Arial,sans-serif" font-size="16" fill="#39586d">
+    <text x="56" y="592">0.48</text><text x="56" y="497">0.53</text><text x="56" y="402">0.58</text><text x="56" y="307">0.63</text><text x="56" y="212">0.68</text>
+  </g>
+  <g stroke="#d6e0e7" stroke-width="1">
+    <line x1="112" y1="586" x2="1135" y2="586"/><line x1="112" y1="491" x2="1135" y2="491"/>
+    <line x1="112" y1="396" x2="1135" y2="396"/><line x1="112" y1="301" x2="1135" y2="301"/><line x1="112" y1="206" x2="1135" y2="206"/>
+  </g>
+  <g font-family="Arial,sans-serif" font-size="15" fill="#2d5169">
+    <rect x="165" y="274" width="52" height="312" fill="#98b5c6"/><rect x="221" y="200" width="52" height="386" fill="#167d67"/>
+    <text x="163" y="616">paper</text><text x="218" y="616">observed</text><text x="166" y="648">true model</text>
+    <rect x="415" y="399" width="52" height="187" fill="#98b5c6"/><rect x="471" y="529" width="52" height="57" fill="#167d67"/>
+    <text x="413" y="616">paper</text><text x="468" y="616">observed</text><text x="390" y="648">noise-only shift</text>
+    <rect x="665" y="491" width="52" height="95" fill="#98b5c6"/><rect x="721" y="542" width="52" height="44" fill="#167d67"/>
+    <text x="663" y="616">paper</text><text x="718" y="616">observed</text><text x="643" y="648">prior-only shift</text>
+    <rect x="915" y="537" width="52" height="49" fill="#98b5c6"/><rect x="971" y="557" width="52" height="29" fill="#167d67"/>
+    <text x="913" y="616">paper</text><text x="968" y="616">observed</text><text x="922" y="648">both shifts</text>
+  </g>
+  <g font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#10283a">
+    <text x="160" y="263">.6442</text><text x="218" y="189">.6831</text><text x="410" y="388">.5783</text><text x="468" y="518">.5097</text>
+    <text x="660" y="480">.5298</text><text x="718" y="531">.5032</text><text x="910" y="526">.5056</text><text x="968" y="546">.4953</text>
+  </g>
+  <rect x="820" y="126" width="315" height="92" rx="14" fill="#fff2d7"/>
+  <text x="843" y="159" fill="#7b5310" font-family="Arial,sans-serif" font-size="17" font-weight="700">Largest absolute delta: 0.0686</text>
+  <text x="843" y="187" fill="#7b5310" font-family="Arial,sans-serif" font-size="15">Reported as DIVERGENT, not hidden.</text>
+</svg>

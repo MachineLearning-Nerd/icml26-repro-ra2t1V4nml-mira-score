@@ -1,4 +1,4 @@
-"""Fail closed unless every live MIRA jury claim has retained evidence."""
+"""Retain the prior three-claim proxy gate as explicitly superseded evidence."""
 
 from __future__ import annotations
 
@@ -45,6 +45,8 @@ def main() -> None:
     verified = sum((claim_1, claim_2, claim_3))
     payload = {
         "paper": "ra2t1V4nml",
+        "scope": "legacy three-claim proxy gate from the judged Space revision",
+        "superseded_by": ".openresearch/artifacts/campaign_verdicts.json",
         "claim_1_conditional_match_score": claim_1,
         "claim_2_null_and_independence_quantities": claim_2,
         "claim_3_direct_model_comparison": claim_3,
@@ -52,7 +54,10 @@ def main() -> None:
         "earned_points": 2 * verified,
         "all_claims_complete": verified == 3,
         "tests_passed": tests_passed,
-        "publication_gate_passed": verified == 3 and tests_passed,
+        "publication_gate_passed": False,
+        "publication_gate_reason": (
+            "superseded legacy scope; the six-claim release candidate still requires explicit approval"
+        ),
         "full_gmm_readback_sha256": hashlib.sha256(full_path.read_bytes()).hexdigest(),
         "full_gmm_job_url": "https://huggingface.co/jobs/DineshAI/6a5de5e0d216bd6f3a2031f7",
         "multi_seed_nearest_zero_shift_margin": aggregate["mean_nearest_shift_margin"],

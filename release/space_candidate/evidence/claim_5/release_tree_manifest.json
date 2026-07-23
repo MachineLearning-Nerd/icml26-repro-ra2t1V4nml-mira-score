@@ -1,0 +1,719 @@
+{
+  "retrieval_user_agent": "OpenResearch-MIRA-Reproduction/1.0",
+  "repositories": [
+    {
+      "repository": "https://github.com/SammyS15/MIRA_Paper_Plots",
+      "commit": "3bc229222cbcf72bd470267175d9a6dff6689ce0",
+      "tree_sha": "3bc229222cbcf72bd470267175d9a6dff6689ce0",
+      "truncated": false,
+      "entry_count": 104,
+      "entries": [
+        {
+          "path": ".gitignore",
+          "type": "blob",
+          "size": 296,
+          "git_sha": "6d193ef492c20c8e457d96bf79be45b2a5a09edc"
+        },
+        {
+          "path": "README.md",
+          "type": "blob",
+          "size": 3526,
+          "git_sha": "e0ebc27031cba75014347ee48519fc71cb859e0b"
+        },
+        {
+          "path": "data",
+          "type": "tree",
+          "size": null,
+          "git_sha": "14b717f88228f8b6d13a1f10abac640bf21334d9"
+        },
+        {
+          "path": "data/Conditional_Gen_Model_Data",
+          "type": "tree",
+          "size": null,
+          "git_sha": "71732cc684dc0f1b5b685a5a1a7473dcfe7d4a4e"
+        },
+        {
+          "path": "data/Conditional_Gen_Model_Data/mira_cache.npz",
+          "type": "blob",
+          "size": 7400,
+          "git_sha": "045f8642b3d79bbbf85336119d1f2b9d7cc60e5b"
+        },
+        {
+          "path": "data/Dimension_Plot",
+          "type": "tree",
+          "size": null,
+          "git_sha": "574f542da136f561e1ed231322c4177c4cec4bb4"
+        },
+        {
+          "path": "data/Dimension_Plot/MMD_Wasserstein_Pokie.ipynb",
+          "type": "blob",
+          "size": 225989,
+          "git_sha": "0293a2aefa449cacbed85301081ad7888fcb7d9a"
+        },
+        {
+          "path": "data/GMM_PQMass",
+          "type": "tree",
+          "size": null,
+          "git_sha": "8d4e47f001c1f3169e2e66a13b7c5ea6bd9e2262"
+        },
+        {
+          "path": "data/GMM_PQMass/shift_neg_3.npz",
+          "type": "blob",
+          "size": 10058,
+          "git_sha": "b3516c9f6ba832993a94792ac1018ae4dde9dafe"
+        },
+        {
+          "path": "data/GMM_PQMass/shift_neg_6.npz",
+          "type": "blob",
+          "size": 10058,
+          "git_sha": "9920210d7a70180b55e3fe150732fb0cdfd68575"
+        },
+        {
+          "path": "data/GMM_PQMass/shift_pos_3.npz",
+          "type": "blob",
+          "size": 10058,
+          "git_sha": "01ad8ab3bc000715ed36d48ba3dd7182efe651d3"
+        },
+        {
+          "path": "data/GMM_PQMass/shift_pos_6.npz",
+          "type": "blob",
+          "size": 10058,
+          "git_sha": "d29f56ed957924cc9519f6fb8cda0c7462547c16"
+        },
+        {
+          "path": "data/GMM_PQMass/shift_zero.npz",
+          "type": "blob",
+          "size": 10058,
+          "git_sha": "fa504904362d52a61dacf366138bd69fe0a15d69"
+        },
+        {
+          "path": "data/Gen_Model_Samples",
+          "type": "tree",
+          "size": null,
+          "git_sha": "a5c621960927df03969919416bc8e8cac6e0bc40"
+        },
+        {
+          "path": "data/Gen_Model_Samples/Conditional_Gen_Models.pdf",
+          "type": "blob",
+          "size": 56786,
+          "git_sha": "2ec20502a96332ae27a5462706581402029d755d"
+        },
+        {
+          "path": "data/Gen_Model_Samples/Conditional_Gen_Models.png",
+          "type": "blob",
+          "size": 57221,
+          "git_sha": "0f3baaf33978a6a7480c65b64b5286fdc1a5caca"
+        },
+        {
+          "path": "data/Gen_Model_Samples/DM_Samples",
+          "type": "tree",
+          "size": null,
+          "git_sha": "f1f2aacc48f50a05b1f7fbf5118f9a0e5e0d6995"
+        },
+        {
+          "path": "data/Gen_Model_Samples/DM_Samples/samples_for_plotting.pt",
+          "type": "blob",
+          "size": 32605,
+          "git_sha": "547fc666e22b02147c471ebd1f494328567753d4"
+        },
+        {
+          "path": "data/Gen_Model_Samples/DM_Samples/samples_of_0s.pt",
+          "type": "blob",
+          "size": 3137210,
+          "git_sha": "4996b198f8d32e505161a17201168a387dc87359"
+        },
+        {
+          "path": "data/Gen_Model_Samples/DM_Samples/samples_of_1s.pt",
+          "type": "blob",
+          "size": 3137210,
+          "git_sha": "38436a8bd5d3345cc7d56cf34fcc7b58d49b2ed8"
+        },
+        {
+          "path": "data/Gen_Model_Samples/DM_Samples/samples_of_2s.pt",
+          "type": "blob",
+          "size": 3137210,
+          "git_sha": "a4390ff683957cb57c9200ac5ddcbbae57133397"
+        },
+        {
+          "path": "data/Gen_Model_Samples/DM_Samples/samples_of_3s.pt",
+          "type": "blob",
+          "size": 3137210,
+          "git_sha": "3ae75912d597fc5eee3f95b47ee7e426adeb3d4d"
+        },
+        {
+          "path": "data/Gen_Model_Samples/DM_Samples/samples_of_4s.pt",
+          "type": "blob",
+          "size": 3137210,
+          "git_sha": "7338735873d5a31ce2ea6b9617a51e4342b2dd8c"
+        },
+        {
+          "path": "data/Gen_Model_Samples/DM_Samples/samples_of_5s.pt",
+          "type": "blob",
+          "size": 3137210,
+          "git_sha": "3ba2e5c4b658d45517c83e3d8637972b9b4848b7"
+        },
+        {
+          "path": "data/Gen_Model_Samples/DM_Samples/samples_of_6s.pt",
+          "type": "blob",
+          "size": 3137210,
+          "git_sha": "20c49cbf823672e457a9a70628a3a099aa86133a"
+        },
+        {
+          "path": "data/Gen_Model_Samples/DM_Samples/samples_of_7s.pt",
+          "type": "blob",
+          "size": 3137210,
+          "git_sha": "49e0a198b5783203792504a9f2a09eefa653fa59"
+        },
+        {
+          "path": "data/Gen_Model_Samples/DM_Samples/samples_of_8s.pt",
+          "type": "blob",
+          "size": 3137210,
+          "git_sha": "9177928906da1a92db2fade3992bd073546207bb"
+        },
+        {
+          "path": "data/Gen_Model_Samples/DM_Samples/samples_of_9s.pt",
+          "type": "blob",
+          "size": 3137210,
+          "git_sha": "549dd1dc1e1a91ad6a71bfb1d047fe2eeb03e741"
+        },
+        {
+          "path": "data/Gen_Model_Samples/VAE_Samples",
+          "type": "tree",
+          "size": null,
+          "git_sha": "5eeebd45b03f94b225312a19136644a9ff4228fc"
+        },
+        {
+          "path": "data/Gen_Model_Samples/VAE_Samples/samples_of_0s.pt",
+          "type": "blob",
+          "size": 3137210,
+          "git_sha": "7539707874fb87252bdc4a48159c1b3bac6eff97"
+        },
+        {
+          "path": "data/Gen_Model_Samples/VAE_Samples/samples_of_1s.pt",
+          "type": "blob",
+          "size": 3137210,
+          "git_sha": "7b8e8ee57fcf18d3244c991fb88b01d73a71e78c"
+        },
+        {
+          "path": "data/Gen_Model_Samples/VAE_Samples/samples_of_2s.pt",
+          "type": "blob",
+          "size": 3137210,
+          "git_sha": "14ddebb0bd90f12ec9726ffb941c6a02d6bed4c8"
+        },
+        {
+          "path": "data/Gen_Model_Samples/VAE_Samples/samples_of_3s.pt",
+          "type": "blob",
+          "size": 3137210,
+          "git_sha": "3a62a9b29a701985e03a005de62cfe12a9048204"
+        },
+        {
+          "path": "data/Gen_Model_Samples/VAE_Samples/samples_of_4s.pt",
+          "type": "blob",
+          "size": 3137210,
+          "git_sha": "caa9ef3a7f1a934ae566fb221c8076223e325224"
+        },
+        {
+          "path": "data/Gen_Model_Samples/VAE_Samples/samples_of_5s.pt",
+          "type": "blob",
+          "size": 3137210,
+          "git_sha": "33742d51a7c53978b77d79f36fae2916f0603cd3"
+        },
+        {
+          "path": "data/Gen_Model_Samples/VAE_Samples/samples_of_6s.pt",
+          "type": "blob",
+          "size": 3137210,
+          "git_sha": "56cbcff7a4968cf1b2296c55d5f04bad437f4b9f"
+        },
+        {
+          "path": "data/Gen_Model_Samples/VAE_Samples/samples_of_7s.pt",
+          "type": "blob",
+          "size": 3137210,
+          "git_sha": "8701eb6ac910ef5258d99128ef5eeb6c6d60aad8"
+        },
+        {
+          "path": "data/Gen_Model_Samples/VAE_Samples/samples_of_8s.pt",
+          "type": "blob",
+          "size": 3137210,
+          "git_sha": "2ecb61ca9e91d3581e3a59fff750b9c1a79926f5"
+        },
+        {
+          "path": "data/Gen_Model_Samples/VAE_Samples/samples_of_9s.pt",
+          "type": "blob",
+          "size": 3137210,
+          "git_sha": "d2f18495cdc603ddf344a669a65c68339d239656"
+        },
+        {
+          "path": "data/InverseBench",
+          "type": "tree",
+          "size": null,
+          "git_sha": "26f1a8f676d706e1ec40a77341cbc231251583bc"
+        },
+        {
+          "path": "data/InverseBench/black_hole_imaging",
+          "type": "tree",
+          "size": null,
+          "git_sha": "28c41bf607d881a38f2000d27321c62b7a18289f"
+        },
+        {
+          "path": "data/InverseBench/black_hole_imaging/DAPS_tarp_results.npz",
+          "type": "blob",
+          "size": 638,
+          "git_sha": "882878a37922433aa2e2112c4b11878f0cf2086f"
+        },
+        {
+          "path": "data/InverseBench/black_hole_imaging/DPS_tarp_results.npz",
+          "type": "blob",
+          "size": 795,
+          "git_sha": "c2259786b045b5c89310736491063c27588c311d"
+        },
+        {
+          "path": "data/InverseBench/black_hole_imaging/DiffPIR_tarp_results.npz",
+          "type": "blob",
+          "size": 797,
+          "git_sha": "1067693f84cb5614585b01a86c8377bdb2f456f4"
+        },
+        {
+          "path": "data/InverseBench/black_hole_imaging/PnPDM_tarp_results.npz",
+          "type": "blob",
+          "size": 638,
+          "git_sha": "882878a37922433aa2e2112c4b11878f0cf2086f"
+        },
+        {
+          "path": "data/InverseBench/black_hole_imaging/REDDiff_tarp_results.npz",
+          "type": "blob",
+          "size": 638,
+          "git_sha": "882878a37922433aa2e2112c4b11878f0cf2086f"
+        },
+        {
+          "path": "data/InverseBench/compressed_sensing_mri",
+          "type": "tree",
+          "size": null,
+          "git_sha": "6a8a745834fae402cbda6d3d47ab830f27af4f46"
+        },
+        {
+          "path": "data/InverseBench/compressed_sensing_mri/DAPS_tarp_results.npz",
+          "type": "blob",
+          "size": 614,
+          "git_sha": "dbb2f1086183a3fe2fa271f394bae84810c49c61"
+        },
+        {
+          "path": "data/InverseBench/compressed_sensing_mri/DPS_tarp_results.npz",
+          "type": "blob",
+          "size": 653,
+          "git_sha": "1580a474427287fcaf66697cd045f1f2c34ce661"
+        },
+        {
+          "path": "data/InverseBench/compressed_sensing_mri/DiffPIR_tarp_results.npz",
+          "type": "blob",
+          "size": 614,
+          "git_sha": "dbb2f1086183a3fe2fa271f394bae84810c49c61"
+        },
+        {
+          "path": "data/InverseBench/compressed_sensing_mri/PnPDM_tarp_results.npz",
+          "type": "blob",
+          "size": 614,
+          "git_sha": "dbb2f1086183a3fe2fa271f394bae84810c49c61"
+        },
+        {
+          "path": "data/InverseBench/compressed_sensing_mri/REDDiff_tarp_results.npz",
+          "type": "blob",
+          "size": 614,
+          "git_sha": "dbb2f1086183a3fe2fa271f394bae84810c49c61"
+        },
+        {
+          "path": "data/InverseBench/linear_inverse_scattering",
+          "type": "tree",
+          "size": null,
+          "git_sha": "e06ff1a8361d8d73cb5c7fcfc790b74881f6ca58"
+        },
+        {
+          "path": "data/InverseBench/linear_inverse_scattering/DAPS_tarp_results.npz",
+          "type": "blob",
+          "size": 637,
+          "git_sha": "2584a48336120f6933fa5830cf8ca47c438bc2fb"
+        },
+        {
+          "path": "data/InverseBench/linear_inverse_scattering/DDNM_tarp_results.npz",
+          "type": "blob",
+          "size": 637,
+          "git_sha": "2584a48336120f6933fa5830cf8ca47c438bc2fb"
+        },
+        {
+          "path": "data/InverseBench/linear_inverse_scattering/DDRM_tarp_results.npz",
+          "type": "blob",
+          "size": 637,
+          "git_sha": "2584a48336120f6933fa5830cf8ca47c438bc2fb"
+        },
+        {
+          "path": "data/InverseBench/linear_inverse_scattering/DPS_tarp_results.npz",
+          "type": "blob",
+          "size": 637,
+          "git_sha": "2584a48336120f6933fa5830cf8ca47c438bc2fb"
+        },
+        {
+          "path": "data/InverseBench/linear_inverse_scattering/DiffPIR_tarp_results.npz",
+          "type": "blob",
+          "size": 637,
+          "git_sha": "2584a48336120f6933fa5830cf8ca47c438bc2fb"
+        },
+        {
+          "path": "data/InverseBench/linear_inverse_scattering/PiGDM_tarp_results.npz",
+          "type": "blob",
+          "size": 637,
+          "git_sha": "2584a48336120f6933fa5830cf8ca47c438bc2fb"
+        },
+        {
+          "path": "data/InverseBench/linear_inverse_scattering/PnPDM_tarp_results.npz",
+          "type": "blob",
+          "size": 637,
+          "git_sha": "2584a48336120f6933fa5830cf8ca47c438bc2fb"
+        },
+        {
+          "path": "data/InverseBench/linear_inverse_scattering/REDDiff_tarp_results.npz",
+          "type": "blob",
+          "size": 637,
+          "git_sha": "2584a48336120f6933fa5830cf8ca47c438bc2fb"
+        },
+        {
+          "path": "data/LR_TARP_Bootstrap_Data",
+          "type": "tree",
+          "size": null,
+          "git_sha": "e36ce34221b49c7ce094e74f94f687d72b950946"
+        },
+        {
+          "path": "data/LR_TARP_Bootstrap_Data/LR_TARP_Bootstrap_Data.npz",
+          "type": "blob",
+          "size": 11570,
+          "git_sha": "2f2eeedfac82a84a0830aff9757ae880650d37cd"
+        },
+        {
+          "path": "data/MMD_Wasserstein_Pokie_Comparison",
+          "type": "tree",
+          "size": null,
+          "git_sha": "9e7ca04ce45aede2aa4e374bbf2f4da755f9e194"
+        },
+        {
+          "path": "data/MMD_Wasserstein_Pokie_Comparison/Conditional_DM.ipynb",
+          "type": "blob",
+          "size": 2110,
+          "git_sha": "c89afd394f516f4fe1c8599436aa50f8b90bce61"
+        },
+        {
+          "path": "data/MMD_Wasserstein_Pokie_Comparison/Conditional_VAE.ipynb",
+          "type": "blob",
+          "size": 1817,
+          "git_sha": "34597d17e49b6a984a4923b6e4094e0f565fc6ba"
+        },
+        {
+          "path": "data/MMD_Wasserstein_Pokie_Comparison/Null_Test.ipynb",
+          "type": "blob",
+          "size": 1815,
+          "git_sha": "745539ae5d93df6faefde577650e7af62d8f8e34"
+        },
+        {
+          "path": "data/TARP_Plots_Conditional_Model",
+          "type": "tree",
+          "size": null,
+          "git_sha": "2030301eaf088ae393657e08305fb598e2d9e0e0"
+        },
+        {
+          "path": "data/TARP_Plots_Conditional_Model/Tarp_Result_Averaged_Data.npz",
+          "type": "blob",
+          "size": 5382,
+          "git_sha": "df129f613c367c35629d4ad06dd0de5759c90b51"
+        },
+        {
+          "path": "data/Tarp_Fig_2_Results",
+          "type": "tree",
+          "size": null,
+          "git_sha": "1326d67af433ad0ea68574b6012d7a777797c4be"
+        },
+        {
+          "path": "data/Tarp_Fig_2_Results/tarp_coverage_biased_tarp_results.npz",
+          "type": "blob",
+          "size": 84246,
+          "git_sha": "e4522e4d9582d5ef66d64b2db4be730604748cf0"
+        },
+        {
+          "path": "data/Tarp_Fig_2_Results/tarp_coverage_correct_tarp_results.npz",
+          "type": "blob",
+          "size": 84246,
+          "git_sha": "ca167190a5d867d821e711bc20c3d9dd46fbf65c"
+        },
+        {
+          "path": "data/Tarp_Fig_2_Results/tarp_coverage_overconfident_tarp_results.npz",
+          "type": "blob",
+          "size": 84246,
+          "git_sha": "99e5c1d2eeccd06bff7f2feca2e29d7d4a6986d4"
+        },
+        {
+          "path": "data/Tarp_Fig_2_Results/tarp_coverage_underconfident_tarp_results.npz",
+          "type": "blob",
+          "size": 84246,
+          "git_sha": "c0f5b9cd594ab5fa576367673f25b891be4e091b"
+        },
+        {
+          "path": "data/lens_exp",
+          "type": "tree",
+          "size": null,
+          "git_sha": "001c99656663c730c02ad5a54c54ca2b1541cff8"
+        },
+        {
+          "path": "data/lens_exp/Lensing_tarp_coverage_data.npz",
+          "type": "blob",
+          "size": 3326,
+          "git_sha": "acc105ad63a4702e83646dbca44f4a31699aeabd"
+        },
+        {
+          "path": "data/lens_exp/lensing_tarp_coverage_all_posteriors.pdf",
+          "type": "blob",
+          "size": 14069,
+          "git_sha": "edb5981999a89b13f281eb50f25a4859cbb82a35"
+        },
+        {
+          "path": "data/lens_exp/observations.pt",
+          "type": "blob",
+          "size": 787194,
+          "git_sha": "18b4ec6a0a20aa970b41531fa6612ab6d564e1c7"
+        },
+        {
+          "path": "data/lens_exp/posterior0.pt",
+          "type": "blob",
+          "size": 50332404,
+          "git_sha": "dc34699740ac5e7dd7dc5d707089f910d356cc24"
+        },
+        {
+          "path": "data/lens_exp/posterior1.pt",
+          "type": "blob",
+          "size": 50332404,
+          "git_sha": "5a8aaab6a8d7e61f10421b2dd3f3e26efa2c4eb5"
+        },
+        {
+          "path": "data/lens_exp/posterior2.pt",
+          "type": "blob",
+          "size": 50332404,
+          "git_sha": "9315b968238dccd1c2aa1982de8b6a4f32d128c9"
+        },
+        {
+          "path": "data/lens_exp/posterior3.pt",
+          "type": "blob",
+          "size": 50332404,
+          "git_sha": "c88108fff5580965bdf708b7a41cc73d12870dc2"
+        },
+        {
+          "path": "data/lens_exp/posterior4.pt",
+          "type": "blob",
+          "size": 393972,
+          "git_sha": "c75fc677a12e7966094ee2bbd73aeabda12b76d3"
+        },
+        {
+          "path": "data/lens_exp/true.pt",
+          "type": "blob",
+          "size": 787106,
+          "git_sha": "c72ddb740c20c35da225348bd34620d5e5d48607"
+        },
+        {
+          "path": "data/model_misspecification_tarp_data.npz",
+          "type": "blob",
+          "size": 3505,
+          "git_sha": "c396e81064a7eeda7d2366db156ee70abbd8059e"
+        },
+        {
+          "path": "data/pokie_experiment_1.pdf",
+          "type": "blob",
+          "size": 83696,
+          "git_sha": "202ff55aa06a3d88b12e2e5a9189ac564b500cc8"
+        },
+        {
+          "path": "figures",
+          "type": "tree",
+          "size": null,
+          "git_sha": "1362e53450f434579618e5f1ebb972b57d49b509"
+        },
+        {
+          "path": "figures/black_hole_imaging",
+          "type": "tree",
+          "size": null,
+          "git_sha": "750b9f99f2eea662672f09673268dc7908e3ca97"
+        },
+        {
+          "path": "figures/black_hole_imaging/blackhole_posterior_mean.pdf",
+          "type": "blob",
+          "size": 310953,
+          "git_sha": "85f9b0b0f7a489546b34d2e42dcb4c8945aca7cc"
+        },
+        {
+          "path": "figures/black_hole_imaging/blackhole_posterior_mean.png",
+          "type": "blob",
+          "size": 426135,
+          "git_sha": "a5c29fa7c4728a0e691b2a9a728c21cfe8e51435"
+        },
+        {
+          "path": "figures/black_hole_imaging/blackhole_posterior_sample.pdf",
+          "type": "blob",
+          "size": 323327,
+          "git_sha": "ad07337dc85790b1d2a20c0e28bd7a7b4261b567"
+        },
+        {
+          "path": "figures/black_hole_imaging/blackhole_posterior_sample.png",
+          "type": "blob",
+          "size": 500996,
+          "git_sha": "b9df89d02e3d690929e649bebc5166ef637f4df8"
+        },
+        {
+          "path": "figures/multi_coil_mri",
+          "type": "tree",
+          "size": null,
+          "git_sha": "a291d583977f5d98cb0d16acc1785bcb6458ca05"
+        },
+        {
+          "path": "figures/multi_coil_mri/multi_coil_mri_knee_posterior_mean.pdf",
+          "type": "blob",
+          "size": 2743101,
+          "git_sha": "0d7d5d0c05d8c7ea3c18772b5f87d6c2e0d6ded4"
+        },
+        {
+          "path": "figures/multi_coil_mri/multi_coil_mri_knee_posterior_mean.png",
+          "type": "blob",
+          "size": 3307287,
+          "git_sha": "383b50eff90e1339d83b49e0a1f9e355a6f7f0ff"
+        },
+        {
+          "path": "figures/multi_coil_mri/multi_coil_mri_knee_posterior_single.pdf",
+          "type": "blob",
+          "size": 3510543,
+          "git_sha": "8a778561767245e0792fb10e786457f51d6b5368"
+        },
+        {
+          "path": "figures/multi_coil_mri/multi_coil_mri_knee_posterior_single.png",
+          "type": "blob",
+          "size": 4279971,
+          "git_sha": "3dd8e26f7a7045573766b28f04e7f85ad8ec3cc9"
+        },
+        {
+          "path": "notebooks",
+          "type": "tree",
+          "size": null,
+          "git_sha": "d9ce87685f26f8ff9fd7a77c37888be96f561073"
+        },
+        {
+          "path": "notebooks/GMM_Plot.ipynb",
+          "type": "blob",
+          "size": 7827,
+          "git_sha": "5749ca572b79c09bd55b511d2e7fadcd570e48f4"
+        },
+        {
+          "path": "notebooks/LR_TARP_Plot.ipynb",
+          "type": "blob",
+          "size": 7689,
+          "git_sha": "a5116250c6866ed77e366955056a263d4f8d4cc3"
+        },
+        {
+          "path": "notebooks/Linear_Regression_Plot.ipynb",
+          "type": "blob",
+          "size": 9083,
+          "git_sha": "869b5b74494ee523921a4fde9772dc6bd8de584b"
+        },
+        {
+          "path": "notebooks/Table_to_Plot.ipynb",
+          "type": "blob",
+          "size": 33761,
+          "git_sha": "a6e681aa2825f86ebf945f906dad76db124846f2"
+        },
+        {
+          "path": "notebooks/lens_posterior.ipynb",
+          "type": "blob",
+          "size": 4731,
+          "git_sha": "fdc168b127c7e47e9f0805cea5066bc9f2a712cb"
+        },
+        {
+          "path": "notebooks/main_plotting.ipynb",
+          "type": "blob",
+          "size": 81129,
+          "git_sha": "784a34306e312305450e3dc940b2418673cda413"
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/SammyS15/mira-score",
+      "commit": "c57487198ac30711783b78ac2af6a76758544483",
+      "tree_sha": "c57487198ac30711783b78ac2af6a76758544483",
+      "truncated": false,
+      "entry_count": 12,
+      "entries": [
+        {
+          "path": ".gitignore",
+          "type": "blob",
+          "size": 347,
+          "git_sha": "9f2a0c795b67d4554550d13fa5fafa6884f3f4f0"
+        },
+        {
+          "path": "LICENSE",
+          "type": "blob",
+          "size": 1070,
+          "git_sha": "79ec708ad55557f5269f49c9979db6c97c0a5b8f"
+        },
+        {
+          "path": "README.md",
+          "type": "blob",
+          "size": 1056,
+          "git_sha": "4ba5e08b27305295064005bbf0ca70b0b3a28c7e"
+        },
+        {
+          "path": "notebook",
+          "type": "tree",
+          "size": null,
+          "git_sha": "afe9e733bd4e1bbecd4c005910c73e0b99030c99"
+        },
+        {
+          "path": "notebook/Baseline Comparison.ipynb",
+          "type": "blob",
+          "size": 195061,
+          "git_sha": "37e1443c609e575972ab1e4ef7bc2994b186f9aa"
+        },
+        {
+          "path": "pyproject.toml",
+          "type": "blob",
+          "size": 522,
+          "git_sha": "d239a894303fbf1c7ee67182f805e116b0b01a6f"
+        },
+        {
+          "path": "requirements.txt",
+          "type": "blob",
+          "size": 23,
+          "git_sha": "cbb807c5accee43d832254aa0343368ddf5be3cf"
+        },
+        {
+          "path": "src",
+          "type": "tree",
+          "size": null,
+          "git_sha": "42f5062f6a9c0669264a9fd2704d0587a435e4db"
+        },
+        {
+          "path": "src/mira_score",
+          "type": "tree",
+          "size": null,
+          "git_sha": "3d36f681bb3ede0a2249b302da8fbc0eb5480429"
+        },
+        {
+          "path": "src/mira_score/__init__.py",
+          "type": "blob",
+          "size": 260,
+          "git_sha": "b655d3cab2be4b66579f13a231f41e6bda7828c6"
+        },
+        {
+          "path": "src/mira_score/_version.py",
+          "type": "blob",
+          "size": 717,
+          "git_sha": "d2f9225f102487c32d84691bd69799b29c675377"
+        },
+        {
+          "path": "src/mira_score/mira.py",
+          "type": "blob",
+          "size": 5906,
+          "git_sha": "6e2474f23f7f72fd05ea1b7b3fb1b63cbf8f0472"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,240 @@
+{
+  "claim_id": 4,
+  "arithmetic": "fractions.Fraction exact rational arithmetic",
+  "identity": "mu = 1/2 + N/(N+2) * gap",
+  "gap": "2 E[U T(U)] - E[T(U)]",
+  "rows": [
+    {
+      "N": 1,
+      "map": "disjoint_limit_T_zero",
+      "chebyshev_gap": {
+        "fraction": "0/1",
+        "decimal": 0.0
+      },
+      "paper_score": {
+        "fraction": "1/2",
+        "decimal": 0.5
+      },
+      "at_or_above_half": true
+    },
+    {
+      "N": 1,
+      "map": "sqrt_T",
+      "chebyshev_gap": {
+        "fraction": "2/15",
+        "decimal": 0.13333333333333333
+      },
+      "paper_score": {
+        "fraction": "49/90",
+        "decimal": 0.5444444444444444
+      },
+      "at_or_above_half": true
+    },
+    {
+      "N": 1,
+      "map": "null_T_identity",
+      "chebyshev_gap": {
+        "fraction": "1/6",
+        "decimal": 0.16666666666666666
+      },
+      "paper_score": {
+        "fraction": "5/9",
+        "decimal": 0.5555555555555556
+      },
+      "at_or_above_half": true
+    },
+    {
+      "N": 1,
+      "map": "quadratic_T",
+      "chebyshev_gap": {
+        "fraction": "1/6",
+        "decimal": 0.16666666666666666
+      },
+      "paper_score": {
+        "fraction": "5/9",
+        "decimal": 0.5555555555555556
+      },
+      "at_or_above_half": true
+    },
+    {
+      "N": 1,
+      "map": "eighth_power_T",
+      "chebyshev_gap": {
+        "fraction": "4/45",
+        "decimal": 0.08888888888888889
+      },
+      "paper_score": {
+        "fraction": "143/270",
+        "decimal": 0.5296296296296297
+      },
+      "at_or_above_half": true
+    },
+    {
+      "N": 64,
+      "map": "disjoint_limit_T_zero",
+      "chebyshev_gap": {
+        "fraction": "0/1",
+        "decimal": 0.0
+      },
+      "paper_score": {
+        "fraction": "1/2",
+        "decimal": 0.5
+      },
+      "at_or_above_half": true
+    },
+    {
+      "N": 64,
+      "map": "sqrt_T",
+      "chebyshev_gap": {
+        "fraction": "2/15",
+        "decimal": 0.13333333333333333
+      },
+      "paper_score": {
+        "fraction": "623/990",
+        "decimal": 0.6292929292929293
+      },
+      "at_or_above_half": true
+    },
+    {
+      "N": 64,
+      "map": "null_T_identity",
+      "chebyshev_gap": {
+        "fraction": "1/6",
+        "decimal": 0.16666666666666666
+      },
+      "paper_score": {
+        "fraction": "131/198",
+        "decimal": 0.6616161616161617
+      },
+      "at_or_above_half": true
+    },
+    {
+      "N": 64,
+      "map": "quadratic_T",
+      "chebyshev_gap": {
+        "fraction": "1/6",
+        "decimal": 0.16666666666666666
+      },
+      "paper_score": {
+        "fraction": "131/198",
+        "decimal": 0.6616161616161617
+      },
+      "at_or_above_half": true
+    },
+    {
+      "N": 64,
+      "map": "eighth_power_T",
+      "chebyshev_gap": {
+        "fraction": "4/45",
+        "decimal": 0.08888888888888889
+      },
+      "paper_score": {
+        "fraction": "1741/2970",
+        "decimal": 0.5861952861952862
+      },
+      "at_or_above_half": true
+    },
+    {
+      "N": 20000,
+      "map": "disjoint_limit_T_zero",
+      "chebyshev_gap": {
+        "fraction": "0/1",
+        "decimal": 0.0
+      },
+      "paper_score": {
+        "fraction": "1/2",
+        "decimal": 0.5
+      },
+      "at_or_above_half": true
+    },
+    {
+      "N": 20000,
+      "map": "sqrt_T",
+      "chebyshev_gap": {
+        "fraction": "2/15",
+        "decimal": 0.13333333333333333
+      },
+      "paper_score": {
+        "fraction": "38003/60006",
+        "decimal": 0.6333200013332
+      },
+      "at_or_above_half": true
+    },
+    {
+      "N": 20000,
+      "map": "null_T_identity",
+      "chebyshev_gap": {
+        "fraction": "1/6",
+        "decimal": 0.16666666666666666
+      },
+      "paper_score": {
+        "fraction": "40003/60006",
+        "decimal": 0.6666500016665
+      },
+      "at_or_above_half": true
+    },
+    {
+      "N": 20000,
+      "map": "quadratic_T",
+      "chebyshev_gap": {
+        "fraction": "1/6",
+        "decimal": 0.16666666666666666
+      },
+      "paper_score": {
+        "fraction": "40003/60006",
+        "decimal": 0.6666500016665
+      },
+      "at_or_above_half": true
+    },
+    {
+      "N": 20000,
+      "map": "eighth_power_T",
+      "chebyshev_gap": {
+        "fraction": "4/45",
+        "decimal": 0.08888888888888889
+      },
+      "paper_score": {
+        "fraction": "106009/180018",
+        "decimal": 0.5888800008888
+      },
+      "at_or_above_half": true
+    }
+  ],
+  "released_implementation_normalized_floors": [
+    {
+      "N": 1,
+      "released_normalized_floor": {
+        "fraction": "3/4",
+        "decimal": 0.75
+      }
+    },
+    {
+      "N": 64,
+      "released_normalized_floor": {
+        "fraction": "33/65",
+        "decimal": 0.5076923076923077
+      }
+    },
+    {
+      "N": 20000,
+      "released_normalized_floor": {
+        "fraction": "10001/20001",
+        "decimal": 0.5000249987500625
+      }
+    }
+  ],
+  "paper_scale_cells": [
+    {
+      "dimensions": 13,
+      "L": 100,
+      "N": 20000,
+      "regions": 100
+    },
+    {
+      "dimensions": 12288,
+      "L": 16,
+      "N": 64,
+      "regions": 100
+    }
+  ]
+}

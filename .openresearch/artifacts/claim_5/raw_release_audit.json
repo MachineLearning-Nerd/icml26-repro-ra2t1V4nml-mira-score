@@ -1,0 +1,113 @@
+{
+  "claim_id": 5,
+  "paper_protocol": {
+    "true_model": "EPL + 3 Sersic",
+    "candidate_models": [
+      "EPL+3_Sersic_true",
+      "SIE+3_Sersic",
+      "EPL+1_Sersic",
+      "SIE+1_Sersic"
+    ],
+    "L": 100,
+    "N": 20000,
+    "dimensions": 13,
+    "regions": 100,
+    "MALA_walkers": 100,
+    "MALA_burnin_steps": 200,
+    "MALA_sampling_steps": 200,
+    "paper_cpu_hours": 13.33
+  },
+  "paper_scores": {
+    "model_order": [
+      "EPL+3_Sersic_true",
+      "SIE+3_Sersic",
+      "EPL+1_Sersic",
+      "SIE+1_Sersic"
+    ],
+    "expected": [
+      0.6319946646690369,
+      0.5787630081176758,
+      0.5393556356430054,
+      0.5222544074058533
+    ],
+    "extracted_from_pinned_notebook": [
+      0.6319946646690369,
+      0.5787630081176758,
+      0.5393556356430054,
+      0.5222544074058533
+    ],
+    "notebook_url": "https://raw.githubusercontent.com/SammyS15/MIRA_Paper_Plots/3bc229222cbcf72bd470267175d9a6dff6689ce0/notebooks/main_plotting.ipynb",
+    "notebook_sha256": "8ef88ab01f886478c2014751078c8a90960c4abca9898fe8ac21b07f008fff87",
+    "values_match": true,
+    "limitation": "hardcoded aggregate scores are not regenerable without posterior samples"
+  },
+  "requirements": [
+    {
+      "id": "truth_parameters_L100_d13",
+      "required": "100 exact 13-dimensional truth parameter vectors",
+      "state": "MISSING",
+      "release_paths": []
+    },
+    {
+      "id": "four_posterior_sets_100x20000x13",
+      "required": "four candidate posterior sets for every one of 100 observations",
+      "state": "MISSING",
+      "release_paths": []
+    },
+    {
+      "id": "mala_sampler_source_and_tuning",
+      "required": "MALA source plus step size, initialization, and walker configuration",
+      "state": "MISSING",
+      "release_paths": []
+    },
+    {
+      "id": "caustics_forward_model_source",
+      "required": "executable EPL/SIE and one/three-Sersic forward-model construction",
+      "state": "MISSING",
+      "release_paths": []
+    },
+    {
+      "id": "all_fixed_forward_parameters",
+      "required": "values for every lens/source parameter described by the paper as held constant",
+      "state": "MISSING",
+      "paper_evidence": "Appendix Table 3 says all other parameters are held constant but does not list their values."
+    },
+    {
+      "id": "software_versions_and_random_seeds",
+      "required": "caustics/MALA versions and deterministic simulation, chain, and MIRA seeds",
+      "state": "MISSING",
+      "paper_evidence": "The paper names caustics and MALA but gives no versions or seeds."
+    }
+  ],
+  "missing_requirement_ids": [
+    "truth_parameters_L100_d13",
+    "four_posterior_sets_100x20000x13",
+    "mala_sampler_source_and_tuning",
+    "caustics_forward_model_source",
+    "all_fixed_forward_parameters",
+    "software_versions_and_random_seeds"
+  ],
+  "essential_inputs_complete": false,
+  "released_tarp_summary_paths": [
+    "data/model_misspecification_tarp_data.npz"
+  ],
+  "relevant_release_paths": [
+    "data/lens_exp/lensing_tarp_coverage_all_posteriors.pdf",
+    "data/lens_exp/posterior0.pt",
+    "data/lens_exp/posterior1.pt",
+    "data/lens_exp/posterior2.pt",
+    "data/lens_exp/posterior3.pt",
+    "data/lens_exp/posterior4.pt",
+    "data/model_misspecification_tarp_data.npz",
+    "figures/black_hole_imaging/blackhole_posterior_mean.pdf",
+    "figures/black_hole_imaging/blackhole_posterior_mean.png",
+    "figures/black_hole_imaging/blackhole_posterior_sample.pdf",
+    "figures/black_hole_imaging/blackhole_posterior_sample.png",
+    "figures/multi_coil_mri/multi_coil_mri_knee_posterior_mean.pdf",
+    "figures/multi_coil_mri/multi_coil_mri_knee_posterior_mean.png",
+    "figures/multi_coil_mri/multi_coil_mri_knee_posterior_single.pdf",
+    "figures/multi_coil_mri/multi_coil_mri_knee_posterior_single.png",
+    "notebooks/lens_posterior.ipynb"
+  ],
+  "conclusion": "BLOCKED"
+}

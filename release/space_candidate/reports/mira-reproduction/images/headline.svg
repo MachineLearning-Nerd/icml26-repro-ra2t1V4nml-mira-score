@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">MIRA reproduction headline result</title>
+  <desc id="desc">Five claims verified, one blocked, with the correct galaxy model ranked first.</desc>
+  <rect width="1200" height="675" rx="28" fill="#08131f"/>
+  <text x="64" y="78" fill="#d7e7f7" font-family="Arial,sans-serif" font-size="22" letter-spacing="3">CLAIM-BY-CLAIM REPRODUCTION · LOCAL CPU</text>
+  <text x="64" y="142" fill="#ffffff" font-family="Arial,sans-serif" font-size="48" font-weight="700">Five verified. One honestly blocked.</text>
+  <text x="64" y="184" fill="#8fb3cc" font-family="Arial,sans-serif" font-size="24">No proxy was promoted to evidence for the missing 13-D lensing run.</text>
+  <rect x="64" y="224" width="435" height="355" rx="20" fill="#10283a"/>
+  <text x="94" y="269" fill="#8fb3cc" font-family="Arial,sans-serif" font-size="18">TERMINAL VERDICTS</text>
+  <text x="94" y="385" fill="#55d6a7" font-family="Arial,sans-serif" font-size="118" font-weight="700">5</text>
+  <text x="236" y="350" fill="#ffffff" font-family="Arial,sans-serif" font-size="30" font-weight="700">VERIFIED</text>
+  <text x="236" y="388" fill="#8fb3cc" font-family="Arial,sans-serif" font-size="19">Claims 1–4 and 6</text>
+  <text x="94" y="515" fill="#f5bd5c" font-family="Arial,sans-serif" font-size="68" font-weight="700">1</text>
+  <text x="176" y="488" fill="#ffffff" font-family="Arial,sans-serif" font-size="27" font-weight="700">BLOCKED</text>
+  <text x="176" y="518" fill="#8fb3cc" font-family="Arial,sans-serif" font-size="17">Claim 5 · missing raw posteriors</text>
+  <text x="176" y="543" fill="#8fb3cc" font-family="Arial,sans-serif" font-size="17">and executable protocol</text>
+  <rect x="535" y="224" width="601" height="355" rx="20" fill="#f4f8fb"/>
+  <text x="568" y="269" fill="#2d5169" font-family="Arial,sans-serif" font-size="18">CLAIM 6 · EXACT 64×64×3 RELEASED TENSORS</text>
+  <line x1="568" y1="503" x2="1093" y2="503" stroke="#c7d7e2" stroke-width="2"/>
+  <g font-family="Arial,sans-serif" font-size="15" fill="#25445a">
+    <rect x="600" y="319" width="78" height="184" rx="7" fill="#167d67"/><text x="614" y="529">true</text>
+    <rect x="735" y="400" width="78" height="103" rx="7" fill="#4a8ca8"/><text x="716" y="529">noise shift</text>
+    <rect x="870" y="404" width="78" height="99" rx="7" fill="#7699ab"/><text x="856" y="529">prior shift</text>
+    <rect x="1005" y="408" width="78" height="95" rx="7" fill="#9babb4"/><text x="1000" y="529">both shifts</text>
+  </g>
+  <g font-family="Arial,sans-serif" font-size="18" font-weight="700">
+    <text x="607" y="309" fill="#167d67">0.6831</text><text x="741" y="390" fill="#2d627b">0.5097</text>
+    <text x="876" y="394" fill="#536f7f">0.5032</text><text x="1010" y="398" fill="#6c7a82">0.4953</text>
+  </g>
+  <text x="64" y="633" fill="#8fb3cc" font-family="Arial,sans-serif" font-size="18">Baseline judged score: 7/12 · release candidate not published · no score increase claimed</text>
+</svg>

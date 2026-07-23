@@ -36,6 +36,7 @@ BASELINE_STEPS = (
     "repro/src/run_tests.py",
     "repro/src/verify_claims.py",
     "repro/src/verify_campaign.py",
+    "repro/src/verify_release_candidate.py",
     "repro/src/build_evidence_bundle.py",
     "repro/src/build_reproduction_bundle.py",
 )

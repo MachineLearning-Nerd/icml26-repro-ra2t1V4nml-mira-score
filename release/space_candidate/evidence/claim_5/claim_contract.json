@@ -1,0 +1,32 @@
+{
+  "claim_id": 5,
+  "source_claim": "For four strong-gravitational-lensing forward models in 13 dimensions, MIRA ranks the true EPL plus three-Sersic model first.",
+  "allowed_verdicts": [
+    "VERIFIED",
+    "FALSIFIED",
+    "BLOCKED"
+  ],
+  "verification_contract": {
+    "scale": {
+      "L": 100,
+      "N": 20000,
+      "dimensions": 13,
+      "regions": 100
+    },
+    "model_order": [
+      "EPL+3_Sersic_true",
+      "SIE+3_Sersic",
+      "EPL+1_Sersic",
+      "SIE+1_Sersic"
+    ],
+    "required_raw_inputs": [
+      "100 exact truth parameter vectors and observations",
+      "four posterior sets with 20000 draws per truth",
+      "complete forward-model constants and executable caustics construction",
+      "complete MALA implementation, tuning, versions, initialization, and seeds"
+    ],
+    "verified_rule": "Exact released or faithfully regenerated data reproduce the stated ranking with uncertainty and negative controls.",
+    "falsified_rule": "A faithful run satisfying every source assumption contradicts the stated ranking.",
+    "blocked_rule": "At least one essential raw input or protocol value is unavailable, preventing either faithful verification or falsification."
+  }
+}

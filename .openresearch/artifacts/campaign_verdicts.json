@@ -1,0 +1,38 @@
+{
+  "paper": "2605.02014",
+  "claims": [
+    {
+      "claim_id": 1,
+      "verdict": "VERIFIED",
+      "passed": true
+    },
+    {
+      "claim_id": 2,
+      "verdict": "VERIFIED",
+      "passed": true
+    },
+    {
+      "claim_id": 3,
+      "verdict": "VERIFIED",
+      "passed": true
+    },
+    {
+      "claim_id": 4,
+      "verdict": "VERIFIED",
+      "passed": true
+    },
+    {
+      "claim_id": 5,
+      "verdict": "BLOCKED",
+      "passed": true
+    },
+    {
+      "claim_id": 6,
+      "verdict": "VERIFIED",
+      "passed": true
+    }
+  ],
+  "evaluated_claim_count": 6,
+  "all_evaluated_claims_terminal": true,
+  "all_evaluated_claim_checks_passed": true
+}

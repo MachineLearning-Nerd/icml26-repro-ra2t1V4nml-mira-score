@@ -1,0 +1,15 @@
+{
+  "space_id": "DineshAI/ra2t1V4nml",
+  "judged_revision": "c085dd81ad770a2e017b773bc62b619a7f0e69a3",
+  "old_file_count": 20,
+  "candidate_file_count": 65,
+  "old_file_set_is_subset": true,
+  "byte_identical_old_files": 19,
+  "additively_changed_old_files": [
+    "logbook.json"
+  ],
+  "changed_file_reason": {
+    "logbook.json": "central manifest extended to index new additive pages"
+  },
+  "all_prior_page_files_byte_identical": true
+}

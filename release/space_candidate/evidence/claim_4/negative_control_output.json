@@ -1,0 +1,50 @@
+{
+  "claim_id": 4,
+  "control_type": "out-of-contract negative control",
+  "expected_result": "all cells fall below 1/2",
+  "rows": [
+    {
+      "N": 1,
+      "map": "T(u)=1-u",
+      "chebyshev_gap": {
+        "fraction": "-1/6",
+        "decimal": -0.16666666666666666
+      },
+      "paper_score": {
+        "fraction": "4/9",
+        "decimal": 0.4444444444444444
+      },
+      "below_half": true,
+      "expected_rejection_reason": "T is decreasing and violates the nested-radial-CDF contract"
+    },
+    {
+      "N": 64,
+      "map": "T(u)=1-u",
+      "chebyshev_gap": {
+        "fraction": "-1/6",
+        "decimal": -0.16666666666666666
+      },
+      "paper_score": {
+        "fraction": "67/198",
+        "decimal": 0.3383838383838384
+      },
+      "below_half": true,
+      "expected_rejection_reason": "T is decreasing and violates the nested-radial-CDF contract"
+    },
+    {
+      "N": 20000,
+      "map": "T(u)=1-u",
+      "chebyshev_gap": {
+        "fraction": "-1/6",
+        "decimal": -0.16666666666666666
+      },
+      "paper_score": {
+        "fraction": "20003/60006",
+        "decimal": 0.3333499983335
+      },
+      "below_half": true,
+      "expected_rejection_reason": "T is decreasing and violates the nested-radial-CDF contract"
+    }
+  ],
+  "negative_control_passed": true
+}

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Claim 6 protocol ambiguity and negative control</title>
+  <desc id="desc">Default no-normalization reproduces the ordering; min-max normalization does not. Rolling truth pairings lowers the true score.</desc>
+  <rect width="1200" height="675" rx="28" fill="#0c1c29"/>
+  <text x="64" y="76" fill="#ffffff" font-family="Arial,sans-serif" font-size="39" font-weight="700">Controls expose what the headline alone cannot</text>
+  <text x="64" y="112" fill="#8fb3cc" font-family="Arial,sans-serif" font-size="19">The paper omits the MIRA normalization flag; both released paths were retained.</text>
+  <rect x="64" y="157" width="515" height="430" rx="20" fill="#132f42"/>
+  <text x="94" y="203" fill="#d8e7f1" font-family="Arial,sans-serif" font-size="23" font-weight="700">Protocol ambiguity</text>
+  <text x="94" y="243" fill="#55d6a7" font-family="Arial,sans-serif" font-size="18">norm=False · released API default · VERIFIED order</text>
+  <g fill="#55d6a7">
+    <rect x="94" y="278" width="366" height="34" rx="6"/><rect x="94" y="330" width="273" height="34" rx="6"/>
+    <rect x="94" y="382" width="269" height="34" rx="6"/><rect x="94" y="434" width="265" height="34" rx="6"/>
+  </g>
+  <g fill="#07131d" font-family="Arial,sans-serif" font-size="15" font-weight="700">
+    <text x="105" y="301">true 0.6831</text><text x="105" y="353">noise 0.5097</text><text x="105" y="405">prior 0.5032</text><text x="105" y="457">both 0.4953</text>
+  </g>
+  <text x="94" y="516" fill="#f5bd5c" font-family="Arial,sans-serif" font-size="17">norm=True · true first, remaining order differs</text>
+  <text x="94" y="548" fill="#8fb3cc" font-family="Arial,sans-serif" font-size="16">0.6745 · 0.5025 · 0.5080 · 0.5105</text>
+  <rect x="621" y="157" width="515" height="430" rx="20" fill="#f5f8fb"/>
+  <text x="654" y="203" fill="#10283a" font-family="Arial,sans-serif" font-size="23" font-weight="700">Broken-pairing negative control</text>
+  <line x1="670" y1="500" x2="1084" y2="500" stroke="#c7d7e2" stroke-width="2"/>
+  <rect x="734" y="267" width="112" height="233" rx="9" fill="#167d67"/>
+  <rect x="921" y="403" width="112" height="97" rx="9" fill="#d18a2b"/>
+  <text x="746" y="253" fill="#167d67" font-family="Arial,sans-serif" font-size="24" font-weight="700">0.6831</text>
+  <text x="933" y="389" fill="#9b621a" font-family="Arial,sans-serif" font-size="24" font-weight="700">0.5183</text>
+  <text x="716" y="534" fill="#2d5169" font-family="Arial,sans-serif" font-size="17">intact pairing</text>
+  <text x="900" y="534" fill="#2d5169" font-family="Arial,sans-serif" font-size="17">truth rolled by 1</text>
+  <text x="654" y="570" fill="#7b5310" font-family="Arial,sans-serif" font-size="17" font-weight="700">Drop: 0.1648 · sensitivity control passed</text>
+  <text x="64" y="636" fill="#8fb3cc" font-family="Arial,sans-serif" font-size="17">Full-scale released-code parity: absolute delta 0.0 for a 12,288-D region.</text>
+</svg>

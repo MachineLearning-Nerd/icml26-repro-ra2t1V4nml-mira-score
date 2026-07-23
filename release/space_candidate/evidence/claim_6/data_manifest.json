@@ -1,0 +1,70 @@
+{
+  "author_repository": "https://github.com/SammyS15/MIRA_Paper_Plots",
+  "author_commit": "3bc229222cbcf72bd470267175d9a6dff6689ce0",
+  "files": [
+    {
+      "path": "true.pt",
+      "source_url": "https://raw.githubusercontent.com/SammyS15/MIRA_Paper_Plots/3bc229222cbcf72bd470267175d9a6dff6689ce0/data/lens_exp/true.pt",
+      "sha256": "74a9b24d746a5dccf2af77fbc72bddd544760d494cbe919e69d704fbb62a5930",
+      "size_bytes": 787106,
+      "expected_shape": [
+        16,
+        3,
+        64,
+        64
+      ]
+    },
+    {
+      "path": "posterior0.pt",
+      "source_url": "https://raw.githubusercontent.com/SammyS15/MIRA_Paper_Plots/3bc229222cbcf72bd470267175d9a6dff6689ce0/data/lens_exp/posterior0.pt",
+      "sha256": "71009759c762452941c375b14b8e701c375c276fb920ecc55304770c01e1370d",
+      "size_bytes": 50332404,
+      "expected_shape": [
+        16,
+        64,
+        3,
+        64,
+        64
+      ]
+    },
+    {
+      "path": "posterior1.pt",
+      "source_url": "https://raw.githubusercontent.com/SammyS15/MIRA_Paper_Plots/3bc229222cbcf72bd470267175d9a6dff6689ce0/data/lens_exp/posterior1.pt",
+      "sha256": "c874b78bbabb3a2c5b057d602ea4e75b41546c14499c3a3d152d9d8b47ed8661",
+      "size_bytes": 50332404,
+      "expected_shape": [
+        16,
+        64,
+        3,
+        64,
+        64
+      ]
+    },
+    {
+      "path": "posterior2.pt",
+      "source_url": "https://raw.githubusercontent.com/SammyS15/MIRA_Paper_Plots/3bc229222cbcf72bd470267175d9a6dff6689ce0/data/lens_exp/posterior2.pt",
+      "sha256": "4eec7a23e4677fb8e8d6c2cee32950715d4788ba24fa2dc9151ef62fcf270698",
+      "size_bytes": 50332404,
+      "expected_shape": [
+        16,
+        64,
+        3,
+        64,
+        64
+      ]
+    },
+    {
+      "path": "posterior3.pt",
+      "source_url": "https://raw.githubusercontent.com/SammyS15/MIRA_Paper_Plots/3bc229222cbcf72bd470267175d9a6dff6689ce0/data/lens_exp/posterior3.pt",
+      "sha256": "a819b262c52fe38e19ea04594dee33ea670943d80285a974b85316e90875cbca",
+      "size_bytes": 50332404,
+      "expected_shape": [
+        16,
+        64,
+        3,
+        64,
+        64
+      ]
+    }
+  ]
+}

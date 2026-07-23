@@ -1,0 +1,30 @@
+{
+  "claim_id": 6,
+  "source_claim": "MIRA detects prior and noise-model misspecification on 64x64x3 galaxy images with L=16 fiducial samples.",
+  "machine_checkable_contract": {
+    "required_verdict": "VERIFIED",
+    "data": "The five author-released tensors at pinned commit 3bc229222cbcf72bd470267175d9a6dff6689ce0 must match protected SHA-256 values.",
+    "scale": {
+      "L": 16,
+      "N": 64,
+      "dimensions": 12288,
+      "regions": 100
+    },
+    "expected_model_order": [
+      "spiral_prior_sigma_2_true",
+      "spiral_prior_sigma_0_5_noise_misspecified",
+      "elliptical_prior_sigma_2_prior_misspecified",
+      "elliptical_prior_sigma_0_5_both_misspecified"
+    ],
+    "numeric_reference_rule": "Report absolute differences from the hardcoded plot scores. Exact score parity is not an acceptance condition because the source claim is detection/ranking and the paper omits its RNG and MIRA center configuration.",
+    "normalization": "False: the released mira API default; the paper does not report overriding it",
+    "uncertainty_rule": "Each paired 95% two-axis bootstrap interval for true minus misspecified score must exclude zero.",
+    "negative_control_rule": "Rolling truth-to-observation pairing by one must lower the true-model score.",
+    "released_code_parity_rule": "At full L, N, and dimension, the optimized scorer must agree with one released-code region to within one discrete count quantum."
+  },
+  "deterministic_seeds": {
+    "regions_and_references": 260502014,
+    "bootstrap": 620052014,
+    "released_code_parity": 1260502014
+  }
+}

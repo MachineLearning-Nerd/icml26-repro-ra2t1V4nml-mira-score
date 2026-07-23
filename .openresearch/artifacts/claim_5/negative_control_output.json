@@ -1,0 +1,35 @@
+{
+  "control_type": "path-only fake assets and permuted score labels",
+  "fake_entries": [
+    {
+      "path": "physical_model/EPL+3_Sersic_true_posterior.npy",
+      "size": 0,
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "path": "physical_model/SIE+3_Sersic_posterior.npy",
+      "size": 0,
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "path": "physical_model/EPL+1_Sersic_posterior.npy",
+      "size": 0,
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "path": "physical_model/SIE+1_Sersic_posterior.npy",
+      "size": 0,
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "minimum_float32_bytes_per_required_posterior_set": 104000000,
+  "fake_assets_rejected": true,
+  "permuted_scores": [
+    0.5787630081176758,
+    0.6319946646690369,
+    0.5393556356430054,
+    0.5222544074058533
+  ],
+  "permuted_true_model_ranks_first": false,
+  "negative_control_passed": true
+}

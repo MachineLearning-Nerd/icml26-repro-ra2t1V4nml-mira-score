@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Exact certificate for the MIRA lower bound</title>
+  <desc id="desc">The exact identity is nonnegative for monotone maps and approaches one half at paper sample scales.</desc>
+  <rect width="1200" height="675" rx="28" fill="#f7fafc"/>
+  <text x="62" y="76" fill="#10283a" font-family="Arial,sans-serif" font-size="40" font-weight="700">Claim 4 is no longer a Gaussian toy</text>
+  <text x="62" y="115" fill="#527084" font-family="Arial,sans-serif" font-size="19">Exact rational certificate under the proposition’s continuous radial-CDF assumptions</text>
+  <rect x="62" y="157" width="1076" height="126" rx="18" fill="#10283a"/>
+  <text x="99" y="211" fill="#ffffff" font-family="Georgia,serif" font-size="31">μ = 1/2 + N/(N+2) · [2 E(U T(U)) − E(T(U))]</text>
+  <text x="99" y="253" fill="#55d6a7" font-family="Arial,sans-serif" font-size="19">T nondecreasing  ⇒  bracket ≥ 0  ⇒  μ ≥ 1/2</text>
+  <text x="62" y="339" fill="#2d5169" font-family="Arial,sans-serif" font-size="22" font-weight="700">Released normalized finite floor</text>
+  <line x1="156" y1="556" x2="1068" y2="556" stroke="#bed0dc" stroke-width="3"/>
+  <line x1="156" y1="376" x2="156" y2="556" stroke="#bed0dc" stroke-width="3"/>
+  <line x1="156" y1="548" x2="1068" y2="548" stroke="#d18a2b" stroke-width="2" stroke-dasharray="9 7"/>
+  <text x="80" y="553" fill="#9b621a" font-family="Arial,sans-serif" font-size="16">0.500</text>
+  <polyline points="220,376 595,520 1015,547" fill="none" stroke="#167d67" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#167d67"><circle cx="220" cy="376" r="12"/><circle cx="595" cy="520" r="12"/><circle cx="1015" cy="547" r="12"/></g>
+  <g fill="#10283a" font-family="Arial,sans-serif" font-size="17" font-weight="700">
+    <text x="181" y="357">0.7500</text><text x="557" y="500">0.507692</text><text x="967" y="527">0.500025</text>
+  </g>
+  <g fill="#527084" font-family="Arial,sans-serif" font-size="17">
+    <text x="207" y="590">N=1</text><text x="575" y="590">N=64</text><text x="985" y="590">N=20,000</text>
+  </g>
+  <rect x="62" y="610" width="1076" height="42" rx="10" fill="#e4f5ef"/>
+  <text x="86" y="637" fill="#12634f" font-family="Arial,sans-serif" font-size="17">Independent checker: 6,435 monotone rational-grid maps · minimum gap 0 · decreasing-map control fell below 1/2</text>
+</svg>

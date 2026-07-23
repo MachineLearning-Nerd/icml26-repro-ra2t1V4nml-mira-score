@@ -1,0 +1,28 @@
+{
+  "claim_id": 5,
+  "verdict": "BLOCKED",
+  "blocked_requirements_verified": true,
+  "assertions": {
+    "contract_allows_only_terminal_verdicts": true,
+    "author_repositories_pinned": true,
+    "complete_recursive_trees": true,
+    "paper_scale_audited": true,
+    "paper_scores_recovered": true,
+    "essential_inputs_incomplete": true,
+    "at_least_four_independent_blockers": true,
+    "independent_absence_checker_passed": true,
+    "negative_control_sensitive": true,
+    "cpu_only": true,
+    "pinned_environment": true,
+    "static_audit_files_present": true
+  },
+  "blockers": [
+    "truth_parameters_L100_d13",
+    "four_posterior_sets_100x20000x13",
+    "mala_sampler_source_and_tuning",
+    "caustics_forward_model_source",
+    "all_fixed_forward_parameters",
+    "software_versions_and_random_seeds"
+  ],
+  "interpretation": "The released aggregate numbers support no independent rerun. BLOCKED is not evidence that the scientific claim is false."
+}

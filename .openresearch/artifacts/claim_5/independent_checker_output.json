@@ -1,0 +1,14 @@
+{
+  "checker": "independent path-level audit over pinned Git tree manifests",
+  "repository_count": 2,
+  "total_tree_entries": 116,
+  "all_trees_complete": true,
+  "mala_code_paths": [],
+  "physical_model_posterior_paths": [],
+  "physical_model_truth_paths": [],
+  "aggregate_tarp_paths": [
+    "data/model_misspecification_tarp_data.npz"
+  ],
+  "exact_inputs_absent": true,
+  "aggregate_tarp_is_not_raw_posterior_evidence": true
+}

@@ -1,0 +1,240 @@
+{
+  "target_space_id": "DineshAI/ra2t1V4nml",
+  "judged_revision": "c085dd81ad770a2e017b773bc62b619a7f0e69a3",
+  "publication_approved": false,
+  "publication_performed": false,
+  "text_only": true,
+  "file_count": 46,
+  "files": [
+    {
+      "path": "evidence/claim_4/EVAL.md",
+      "sha256": "f03563ff9f9e615af60f2ccf37190c75f370e829c9831a3b704c36b2dcccefbd",
+      "bytes": 561
+    },
+    {
+      "path": "evidence/claim_4/claim_contract.json",
+      "sha256": "6a7e5366846e20ea39b443771701c8e4b5718b32d9d10744f70bf80d0e0593a7",
+      "bytes": 1528
+    },
+    {
+      "path": "evidence/claim_4/environment.json",
+      "sha256": "db81f1daf9966a519b51b25abade6ce152a4117709dae0e2988bb02663d53663",
+      "bytes": 467
+    },
+    {
+      "path": "evidence/claim_4/independent_checker_output.json",
+      "sha256": "74904f1db8633c67a9019dc8d1621b98febf6e6d1bb00b91b313801330d5ed90",
+      "bytes": 391
+    },
+    {
+      "path": "evidence/claim_4/limitations_and_deviations.md",
+      "sha256": "0b1f265acff43dcf13abe3969c08008d2b5a95a9d39b706c9420a6bcc494f335",
+      "bytes": 942
+    },
+    {
+      "path": "evidence/claim_4/method.md",
+      "sha256": "aa8c0133859764f4dda86786451af2ebe352754750db9a850f9f2d211cfa6cd8",
+      "bytes": 997
+    },
+    {
+      "path": "evidence/claim_4/negative_control_output.json",
+      "sha256": "7874343a60f838f829afb0fd188ee75666fd8465efb7112b41d782bc853e6101",
+      "bytes": 1309
+    },
+    {
+      "path": "evidence/claim_4/raw_exact_results.json",
+      "sha256": "2c012f11b5a1337ff5c89eed05cf17f36a6666705b581d5123758a5a3e89b7ff",
+      "bytes": 5118
+    },
+    {
+      "path": "evidence/claim_4/source_audit.md",
+      "sha256": "4a8e83ed7e3f941b7dd740e1f41ec5759d0dbce7d4f849883f1d377cfda3bf36",
+      "bytes": 1171
+    },
+    {
+      "path": "evidence/claim_4/verifier_output.json",
+      "sha256": "1210acad9f5537f50181e83bb00e0eb4b91b829bd2bf88e67ac67219b23c0637",
+      "bytes": 579
+    },
+    {
+      "path": "evidence/claim_5/EVAL.md",
+      "sha256": "40f781e0b8c16187d08d58c2b694da07f3009d8302f71e79fe0e1f5e36ec1cad",
+      "bytes": 920
+    },
+    {
+      "path": "evidence/claim_5/claim_contract.json",
+      "sha256": "54079383f1c78482f9e8a1a9e3e32650a5813732dfa5ada014a6998d7cdbeef1",
+      "bytes": 1204
+    },
+    {
+      "path": "evidence/claim_5/environment.json",
+      "sha256": "ff55df6119dde85afcfc6b93ebb3ddd99324f1c8c3a5177c81471baaaabe9604",
+      "bytes": 484
+    },
+    {
+      "path": "evidence/claim_5/independent_checker_output.json",
+      "sha256": "94525f2a92efd70f8db9d9796ce99b0a9252b5854a06b81008c09d5f80fc8696",
+      "bytes": 432
+    },
+    {
+      "path": "evidence/claim_5/limitations_and_deviations.md",
+      "sha256": "58b914af7bc7be718cce18f851b18bec66f325997288df6bd3aa35080c1e5f5a",
+      "bytes": 705
+    },
+    {
+      "path": "evidence/claim_5/method.md",
+      "sha256": "49532b6e123cb8c486905b5d78af83c53d3fdc092c3f88cc2a5e4cb4dc2ca4ec",
+      "bytes": 1099
+    },
+    {
+      "path": "evidence/claim_5/negative_control_output.json",
+      "sha256": "b93541138aa23323c678496a55d943c85ebaf3124c57a9de73f29fa532138240",
+      "bytes": 1088
+    },
+    {
+      "path": "evidence/claim_5/raw_release_audit.json",
+      "sha256": "f1e08687d2841bd46b547a5e60403de01719170f3715120f41f886eae39c599d",
+      "bytes": 3867
+    },
+    {
+      "path": "evidence/claim_5/release_tree_manifest.json",
+      "sha256": "9322ab10bbfc042e9508fe0dfd9735dd3943323942bdbc30a69d028e46dfe81f",
+      "bytes": 23754
+    },
+    {
+      "path": "evidence/claim_5/source_audit.md",
+      "sha256": "24841535a5b970553cee6f5665cf753744403e2afb4fc7bedc925370e3ad2c99",
+      "bytes": 1441
+    },
+    {
+      "path": "evidence/claim_5/verifier_output.json",
+      "sha256": "efae7b3520c310ccb7466cadd8db3f05d86dfd9f12920717939d74110ffc6b1f",
+      "bytes": 967
+    },
+    {
+      "path": "evidence/claim_6/EVAL.md",
+      "sha256": "8d5703f16e9412a279b9e0976a8bd82bad4c4ae97a6e007a81ef2bd4c5305fa3",
+      "bytes": 1433
+    },
+    {
+      "path": "evidence/claim_6/claim_contract.json",
+      "sha256": "6fd822c779421d4c1366fcf5af3bfe45ff9fb7a7355c61e2cc9ad855481508af",
+      "bytes": 1580
+    },
+    {
+      "path": "evidence/claim_6/data_manifest.json",
+      "sha256": "ed89de06a95905f4211f1f887d2db6092bc5a85dd202acbf75c50a3bee5b4773",
+      "bytes": 2138
+    },
+    {
+      "path": "evidence/claim_6/environment.json",
+      "sha256": "2966e5d7fffe528e98d81bb708c0eae80f97f9bd64b24e618f06ef5537282a79",
+      "bytes": 595
+    },
+    {
+      "path": "evidence/claim_6/implementation_parity.json",
+      "sha256": "41b6c2a4f517609ac80212993f20583de3c5dba9a99c45a39a3a671d70c5cad3",
+      "bytes": 291
+    },
+    {
+      "path": "evidence/claim_6/independent_checker_output.json",
+      "sha256": "76f6f44519a2ae788ba8a3d47b18f19256bedb138646d943c3c8f9f5b7118b37",
+      "bytes": 1577
+    },
+    {
+      "path": "evidence/claim_6/limitations_and_deviations.md",
+      "sha256": "1a49f1bcbd827a338b3dcdc94c4e111c52b619e3d6625dcf8c82ef02f69068c5",
+      "bytes": 1491
+    },
+    {
+      "path": "evidence/claim_6/method.md",
+      "sha256": "e57b7ee039ed4b93be30dec63762ebb9a52d8a7897888250560292f3122f217f",
+      "bytes": 1617
+    },
+    {
+      "path": "evidence/claim_6/negative_control_output.json",
+      "sha256": "2f711550953ef0b272a134370d1ca01c7287e36395283d386cdf426ddc83519c",
+      "bytes": 615
+    },
+    {
+      "path": "evidence/claim_6/raw_per_region_truth.csv",
+      "sha256": "d131f76c774939fec5c98aad9d9e1d9e91eebff407d15d2da0bde2a065e04f02",
+      "bytes": 445012
+    },
+    {
+      "path": "evidence/claim_6/raw_summary.json",
+      "sha256": "fcd961feb6ca2e1bee69573259f81497677530587f90cee927c9f341f8a3033a",
+      "bytes": 3714
+    },
+    {
+      "path": "evidence/claim_6/source_audit.md",
+      "sha256": "a926cd4ad23e5badf084df0a5e8379f80af6d491cbdeae15563d6f7e899e0cfc",
+      "bytes": 1673
+    },
+    {
+      "path": "evidence/claim_6/verifier_output.json",
+      "sha256": "f9ecf5292a3bc6dd05d292cd03420f5722a5f6b30cdee7cf5fd4d38082c26462",
+      "bytes": 874
+    },
+    {
+      "path": "logbook.json",
+      "sha256": "22b0b53070d5fcb0b8812b5717d50c5993fbe527a6f07b9268399b3e5a8a99cd",
+      "bytes": 3802
+    },
+    {
+      "path": "pages/claim-4-exact-lower-bound/page.md",
+      "sha256": "1375fb8b6a0c7569d49273b999e6ffdfe097fdb9a87758c5411679f2df766cbd",
+      "bytes": 1286
+    },
+    {
+      "path": "pages/claim-5-physical-lensing-release-audit/page.md",
+      "sha256": "d36c742e1322160b5d8257c8a892f9cd7accadf55150b733b014a9a32dca5073",
+      "bytes": 1379
+    },
+    {
+      "path": "pages/claim-6-galaxy-images/page.md",
+      "sha256": "0ba5d3a198bba095bb918d0749f7d112da384497fef81088b70fd90849a97a1f",
+      "bytes": 1682
+    },
+    {
+      "path": "pages/cumulative-release-summary/page.md",
+      "sha256": "d882e909f0f5c3ae83a5d06230c3b1bf151115302f0856979b0c81b9e6d2d962",
+      "bytes": 1982
+    },
+    {
+      "path": "pages/release-integrity/page.md",
+      "sha256": "028b080e94840f3638432ffd2c96b325ba19204cd65c38386e59e215c7fb138a",
+      "bytes": 1123
+    },
+    {
+      "path": "reports/mira-reproduction/images/claim4_certificate.svg",
+      "sha256": "88f15ced25679fec5ff09d54d7af8d006c47d53f7381c11734cb7a25dfe2c6f0",
+      "bytes": 2505
+    },
+    {
+      "path": "reports/mira-reproduction/images/claim5_blockers.svg",
+      "sha256": "f37aa1f4c8ca8f8712b507054091ca65fa8ccfae0c5716d2f7091207192c05f1",
+      "bytes": 4078
+    },
+    {
+      "path": "reports/mira-reproduction/images/claim6_controls.svg",
+      "sha256": "57d954338621ccf3cc73c272faaffcf733342740f27e08c04c07f33a1081ed50",
+      "bytes": 3085
+    },
+    {
+      "path": "reports/mira-reproduction/images/claim6_scores.svg",
+      "sha256": "27cf58a5a1b591d98f841d3adf43a70a3dcab2476c8f4ed8ec3b3e69d7f4f3f7",
+      "bytes": 3008
+    },
+    {
+      "path": "reports/mira-reproduction/images/headline.svg",
+      "sha256": "1bde7abc8fe2a4c26d57def27b4f5e262ed67059ca4fcd12399cabf34e9731ca",
+      "bytes": 3097
+    },
+    {
+      "path": "reports/mira-reproduction/report.md",
+      "sha256": "a75568060aeccf77f54e497d86d9bfbe1089d77b0afc8aea92f28c1fe196b648",
+      "bytes": 8765
+    }
+  ]
+}

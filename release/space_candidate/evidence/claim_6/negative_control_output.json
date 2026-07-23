@@ -1,0 +1,14 @@
+{
+  "control_type": "roll truth-to-observation pairing by one fiducial",
+  "expected": "the deliberately broken true-model pairing scores lower than the intact pairing",
+  "intact_true_model_score": 0.6830859375,
+  "rolled_pairing_true_model_score": 0.518330078125,
+  "drop": 0.16475585937500004,
+  "negative_control_passed": true,
+  "all_rolled_model_scores": {
+    "spiral_prior_sigma_2_true": 0.518330078125,
+    "spiral_prior_sigma_0_5_noise_misspecified": 0.51013671875,
+    "elliptical_prior_sigma_2_prior_misspecified": 0.512080078125,
+    "elliptical_prior_sigma_0_5_both_misspecified": 0.50767578125
+  }
+}

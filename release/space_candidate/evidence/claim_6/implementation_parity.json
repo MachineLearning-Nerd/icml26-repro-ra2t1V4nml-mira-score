@@ -1,0 +1,9 @@
+{
+  "scope": "one region, one model, L=16, N=64, dimensions=12288",
+  "seed": 1260502014,
+  "released_implementation_score": 0.6640625,
+  "optimized_implementation_score": 0.6640625,
+  "absolute_delta": 0.0,
+  "single_count_score_quantum": 0.0009765625,
+  "within_one_count_quantum": true
+}

@@ -1,0 +1,24 @@
+{
+  "claim_id": 4,
+  "paper_anchor": "Proposition 3.5 (prop:lower_bound), TeX lines 343-354; proof lines 731-827",
+  "statement": "For any candidate model M, the paper-defined (unnormalized) expected MIRA score is at least 1/2.",
+  "domain": {
+    "sample_count": "integer N >= 1",
+    "candidate": "conditional distribution whose radial CDF about a fixed center is continuous, so lambda_n is Uniform[0,1]",
+    "truth": "conditional distribution measured on the same nested metric balls",
+    "coupling": "lambda_k = T(lambda_n) almost surely for a measurable nondecreasing T:[0,1]->[0,1]"
+  },
+  "machine_checkable_contract": {
+    "identity": "mu = 1/2 + N/(N+2) * (2 E[lambda_n lambda_k] - E[lambda_k])",
+    "required_inequality": "2 E[U T(U)] - E[T(U)] >= 0 for U~Uniform[0,1] and nondecreasing T",
+    "required_verdict": "VERIFIED",
+    "allowed_verdicts": ["VERIFIED", "FALSIFIED", "BLOCKED"]
+  },
+  "paper_scale_cells": [
+    {"application": "13D physical-model mismatch", "dimensions": 13, "L": 100, "N": 20000, "regions": 100},
+    {"application": "64x64x3 prior/noise shift", "dimensions": 12288, "L": 16, "N": 64, "regions": 100}
+  ],
+  "normalization_note": "The released implementation divides by (N+1)/(N+2); its corresponding floor is (N+2)/(2(N+1)), which is strictly above 1/2.",
+  "falsification_condition": "A valid nondecreasing T under the stated radial-CDF assumptions with exact score below 1/2.",
+  "blocked_condition": "The source assumptions or score definition cannot be resolved unambiguously."
+}

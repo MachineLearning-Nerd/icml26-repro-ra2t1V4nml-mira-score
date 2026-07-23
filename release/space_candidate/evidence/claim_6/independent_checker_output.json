@@ -1,0 +1,50 @@
+{
+  "checker": "Python standard-library CSV aggregation, independent of torch scoring code",
+  "raw_row_count": 6400,
+  "region_model_cell_count": 400,
+  "models": [
+    {
+      "model_index": 0,
+      "model": "spiral_prior_sigma_2_true",
+      "mean": 0.6830859375,
+      "region_std": 0.04964990291584221,
+      "paper_score": 0.6442,
+      "absolute_paper_delta": 0.03888593750000002
+    },
+    {
+      "model_index": 1,
+      "model": "spiral_prior_sigma_0_5_noise_misspecified",
+      "mean": 0.5097265625,
+      "region_std": 0.06678752925051042,
+      "paper_score": 0.5783,
+      "absolute_paper_delta": 0.0685734375
+    },
+    {
+      "model_index": 2,
+      "model": "elliptical_prior_sigma_2_prior_misspecified",
+      "mean": 0.503212890625,
+      "region_std": 0.07082675284487853,
+      "paper_score": 0.5298,
+      "absolute_paper_delta": 0.026587109375000084
+    },
+    {
+      "model_index": 3,
+      "model": "elliptical_prior_sigma_0_5_both_misspecified",
+      "mean": 0.4953125,
+      "region_std": 0.06064114855372294,
+      "paper_score": 0.5056,
+      "absolute_paper_delta": 0.01028750000000006
+    }
+  ],
+  "observed_model_order": [
+    "spiral_prior_sigma_2_true",
+    "spiral_prior_sigma_0_5_noise_misspecified",
+    "elliptical_prior_sigma_2_prior_misspecified",
+    "elliptical_prior_sigma_0_5_both_misspecified"
+  ],
+  "model_order_matches_paper": true,
+  "maximum_absolute_paper_delta": 0.0685734375,
+  "within_0_03_numeric_reference_tolerance": false,
+  "numeric_reference_alignment": "DIVERGENT",
+  "numeric_reference_is_claim_gate": false
+}

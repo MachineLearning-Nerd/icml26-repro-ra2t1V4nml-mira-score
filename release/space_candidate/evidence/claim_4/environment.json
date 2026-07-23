@@ -1,0 +1,11 @@
+{
+  "command": "uv run --frozen python repro/src/run_campaign.py",
+  "git_sha": "d08ea06986aa6415ac444bff9a3439d99be06dd6",
+  "uv_lock_sha256": "f36589141d0a7496c5d3a4e404ac3cdd3cbceba0d15a3b23d42ad4b66100ea05",
+  "python": "3.11.13 (main, Jun  3 2025, 18:38:25) [Clang 17.0.0 (clang-1700.0.13.3)]",
+  "platform": "macOS-26.5.2-arm64-arm-64bit",
+  "processor": "arm",
+  "logical_cpu_count": 8,
+  "deterministic_seeds": [],
+  "runtime_seconds": 0.027965499961283058
+}
