@@ -38,6 +38,14 @@ def flatten(node: dict) -> list[dict]:
 
 def main() -> None:
     protected = json.loads((RELEASE / "judged_space_manifest.json").read_text())
+    receipt_path = RELEASE / "publication_receipt.json"
+    receipt = json.loads(receipt_path.read_text()) if receipt_path.is_file() else None
+    publication_performed = (
+        receipt is not None
+        and receipt["space_id"] == protected["space_id"]
+        and receipt["uploaded_file_count"] == 49
+        and receipt["readback_manifest_failures"] == 0
+    )
     old_rows = protected["files"]
     old_paths = [row["path"] for row in old_rows]
     if len(old_rows) != 20 or len(set(old_paths)) != 20:
@@ -148,11 +156,13 @@ def main() -> None:
         "target_space_id": "DineshAI/ra2t1V4nml",
         "judged_revision": protected["revision"],
         "publication_approved": True,
-        "publication_performed": False,
+        "publication_performed": publication_performed,
         "text_only": True,
         "file_count": len(manifest_rows),
         "files": manifest_rows,
     }
+    if publication_performed:
+        manifest["published_revision"] = receipt["published_revision"]
     (RELEASE / "text_upload_manifest.json").write_text(
         json.dumps(manifest, indent=2) + "\n", encoding="utf-8"
     )
@@ -179,7 +189,7 @@ def main() -> None:
     payload = {
         "release_candidate_ready": True,
         "publication_approved": True,
-        "publication_performed": False,
+        "publication_performed": publication_performed,
         "score_increase_claimed": False,
         "target_space_id": protected["space_id"],
         "old_file_set_is_subset": subset["old_file_set_is_subset"],
@@ -192,6 +202,8 @@ def main() -> None:
         "secret_findings": secret_findings,
         "verdicts": verdicts,
     }
+    if publication_performed:
+        payload["published_revision"] = receipt["published_revision"]
     (RELEASE / "release_gate.json").write_text(
         json.dumps(payload, indent=2) + "\n", encoding="utf-8"
     )

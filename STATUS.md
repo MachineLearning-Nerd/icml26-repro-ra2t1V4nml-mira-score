@@ -2,7 +2,8 @@
 
 - Baseline live-judge score: `7/12`
 - Current terminal evidence: Claims 1–4 and 6 `VERIFIED`; Claim 5 `BLOCKED`
-- Publication state: **approved 2026-07-23; publishing to the existing Space**
+- Publication state: **published; awaiting live judge**
+- Published Space revision: `b5802ea9e9965404b48459f6425dcc680a2c7ea0`
 - Score increase claimed: **no**
 - Compute for terminal evidence: local Apple-arm CPU; Claim 5 sampler audit:
   94m47s HF `cpu-upgrade`; no GPU; billed cost not exposed in run logs

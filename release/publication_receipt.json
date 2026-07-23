@@ -1,0 +1,14 @@
+{
+  "space_id": "DineshAI/ra2t1V4nml",
+  "parent_revision": "ada5f26e3b242dc74dfc079a420c62a1cdb90e92",
+  "published_revision": "b5802ea9e9965404b48459f6425dcc680a2c7ea0",
+  "published_at_utc": "2026-07-23T13:25:48Z",
+  "source_git_sha": "deb608df02333503b2ccdd6e4c4c8445dd2b9477",
+  "upload_manifest_sha256": "6ea05d5ab87963eb9daef6e71fdc2fdc863e6c02694efab9a81b1a9aac71b9d4",
+  "uploaded_file_count": 49,
+  "published_file_count": 68,
+  "readback_manifest_failures": 0,
+  "runtime_stage": "RUNNING",
+  "score_increase_claimed": false,
+  "state": "AWAITING_LIVE_JUDGE"
+}

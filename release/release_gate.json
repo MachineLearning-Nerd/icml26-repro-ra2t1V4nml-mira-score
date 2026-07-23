@@ -1,7 +1,7 @@
 {
   "release_candidate_ready": true,
   "publication_approved": true,
-  "publication_performed": false,
+  "publication_performed": true,
   "score_increase_claimed": false,
   "target_space_id": "DineshAI/ra2t1V4nml",
   "old_file_set_is_subset": true,
@@ -16,5 +16,6 @@
     "4": "VERIFIED",
     "5": "BLOCKED",
     "6": "VERIFIED"
-  }
+  },
+  "published_revision": "b5802ea9e9965404b48459f6425dcc680a2c7ea0"
 }

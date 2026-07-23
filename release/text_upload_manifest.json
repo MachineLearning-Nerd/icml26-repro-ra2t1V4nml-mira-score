@@ -2,7 +2,7 @@
   "target_space_id": "DineshAI/ra2t1V4nml",
   "judged_revision": "c085dd81ad770a2e017b773bc62b619a7f0e69a3",
   "publication_approved": true,
-  "publication_performed": false,
+  "publication_performed": true,
   "text_only": true,
   "file_count": 49,
   "files": [
@@ -251,5 +251,6 @@
       "sha256": "ac1a02d38bcb1084359d943fe62a83fda395032292004955e4f33fab4de88693",
       "bytes": 10151
     }
-  ]
+  ],
+  "published_revision": "b5802ea9e9965404b48459f6425dcc680a2c7ea0"
 }
