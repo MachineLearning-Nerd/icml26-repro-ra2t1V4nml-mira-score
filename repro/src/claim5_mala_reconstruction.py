@@ -39,6 +39,8 @@ MODELS = (
     ("EPL+1_Sersic", "EPL", 1),
     ("SIE+1_Sersic", "SIE", 1),
 )
+GAUSS_NEWTON_MAX_ITERATIONS = 100
+INITIAL_LAPLACE_SCALE = 1.0
 
 
 @dataclass(frozen=True)
@@ -244,7 +246,7 @@ def map_and_full_mass(
     damping = 1.0e-3
     gn_iterations = 0
     accepted_gn_steps = 0
-    for iteration in range(30):
+    for iteration in range(GAUSS_NEWTON_MAX_ITERATIONS):
         density, gradient = log_density_and_gradient(
             map_state[None, :],
             observation,
@@ -333,6 +335,7 @@ def map_and_full_mass(
         "map_starts": 64,
         "map_optimized_starts": 8,
         "map_iterations": 80,
+        "gauss_newton_max_iterations": GAUSS_NEWTON_MAX_ITERATIONS,
         "gauss_newton_iterations": gn_iterations,
         "gauss_newton_accepted_steps": accepted_gn_steps,
     }
@@ -358,7 +361,7 @@ def mala(
         protocol=protocol,
         generator=generator,
     )
-    state = map_state[None, :] + 0.05 * (
+    state = map_state[None, :] + INITIAL_LAPLACE_SCALE * (
         torch.randn(
             (protocol.walkers, dimension), generator=generator
         )
@@ -460,6 +463,7 @@ def mala(
                 initial_gradient_norms.median()
             ),
             "initial_gradient_norm_max": float(initial_gradient_norms.max()),
+            "initial_laplace_scale": INITIAL_LAPLACE_SCALE,
             "finite_samples": bool(torch.isfinite(flat_physical).all()),
             "sample_shape": list(flat_physical.shape),
         }
