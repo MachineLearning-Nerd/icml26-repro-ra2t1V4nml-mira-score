@@ -34,5 +34,6 @@ def test_streamed_kernel_matches_released_normalized_kernel() -> None:
     streamed_mean, streamed_std = mira_score_streamed(
         truth, posterior[0], 9, torch.Generator(device="cpu").manual_seed(456), chunk_a=3
     )
-    assert abs(float(official_mean[0]) - streamed_mean) < 1e-7
-    assert abs(float(official_std[0]) - streamed_std) < 1e-7
+    two_float32_ulps = 2 * torch.finfo(torch.float32).eps
+    assert abs(float(official_mean[0]) - streamed_mean) <= two_float32_ulps
+    assert abs(float(official_std[0]) - streamed_std) <= two_float32_ulps
