@@ -35,7 +35,9 @@ def main() -> None:
             "EPL+1_Sersic",
             "SIE+1_Sersic",
         ],
-        "mala_used": protocol["burnin_steps"] > 0
+        "posterior_sampler_configured": protocol["sampler"]
+        == "preconditioned_hmc"
+        and protocol["burnin_steps"] > 0
         and protocol["sampling_steps"] > 0
         and protocol["walkers"] > 1,
         "posterior_shapes": all(

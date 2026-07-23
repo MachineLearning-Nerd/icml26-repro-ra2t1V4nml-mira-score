@@ -62,11 +62,13 @@ class Protocol:
 # it must replace only this committed protocol with the paper scale.
 PROTOCOL = Protocol(
     truths=1,
-    walkers=100,
-    burnin_steps=200,
-    sampling_steps=200,
+    walkers=25,
+    burnin_steps=400,
+    sampling_steps=800,
     regions=100,
 )
+SAMPLER_NAME = "preconditioned_hmc"
+HMC_LEAPFROG_STEPS = 4
 
 
 def git_sha() -> str:
@@ -358,7 +360,7 @@ def mala(
         protocol=protocol,
         generator=generator,
     )
-    state = map_state[None, :] + 0.05 * (
+    state = map_state[None, :] + 0.5 * (
         torch.randn(
             (protocol.walkers, dimension), generator=generator
         )
@@ -374,8 +376,9 @@ def mala(
         protocol=protocol,
     )
     initial_gradient_norms = torch.linalg.vector_norm(gradient, dim=1)
-    log_step_size = math.log(0.5)
-    target_acceptance = 0.574
+    cholesky_precision = torch.linalg.cholesky(precision)
+    log_step_size = math.log(0.12)
+    target_acceptance = 0.65
     burnin_acceptance: list[float] = []
     production_acceptance: list[float] = []
     chains: list[torch.Tensor] = []
@@ -383,44 +386,42 @@ def mala(
     total_steps = protocol.burnin_steps + protocol.sampling_steps
     for step in range(total_steps):
         step_size = math.exp(log_step_size)
-        drift = 0.5 * step_size**2 * (gradient @ mass)
-        proposed = (
-            state
-            + drift
-            + step_size
-            * (
-                torch.randn(
+        momentum = (
+            torch.randn(
                 state.shape, dtype=state.dtype, generator=generator
-                )
-                @ cholesky.T
             )
+            @ cholesky_precision.T
         )
-        proposed_density, proposed_gradient = log_density_and_gradient(
-            proposed,
-            observation,
-            lens_type=lens_type,
-            source_count=source_count,
-            nuisance_regime=nuisance_regime,
-            protocol=protocol,
-        )
-        proposed_drift = 0.5 * step_size**2 * (proposed_gradient @ mass)
-        forward_residual = proposed - state - drift
-        reverse_residual = state - proposed - proposed_drift
-        forward = (
-            -0.5
-            * torch.einsum(
-                "bi,ij,bj->b", forward_residual, precision, forward_residual
+        initial_momentum = momentum.clone()
+        proposed = state.clone()
+        proposed_density = log_density
+        proposed_gradient = gradient
+        momentum = momentum + 0.5 * step_size * proposed_gradient
+        for leapfrog_index in range(HMC_LEAPFROG_STEPS):
+            proposed = proposed + step_size * (momentum @ mass)
+            proposed_density, proposed_gradient = log_density_and_gradient(
+                proposed,
+                observation,
+                lens_type=lens_type,
+                source_count=source_count,
+                nuisance_regime=nuisance_regime,
+                protocol=protocol,
             )
-            / step_size**2
+            if leapfrog_index + 1 < HMC_LEAPFROG_STEPS:
+                momentum = momentum + step_size * proposed_gradient
+        momentum = momentum + 0.5 * step_size * proposed_gradient
+        initial_kinetic = 0.5 * torch.einsum(
+            "bi,ij,bj->b", initial_momentum, mass, initial_momentum
         )
-        reverse = (
-            -0.5
-            * torch.einsum(
-                "bi,ij,bj->b", reverse_residual, precision, reverse_residual
-            )
-            / step_size**2
+        proposed_kinetic = 0.5 * torch.einsum(
+            "bi,ij,bj->b", momentum, mass, momentum
         )
-        log_acceptance = proposed_density - log_density + reverse - forward
+        log_acceptance = (
+            proposed_density
+            - proposed_kinetic
+            - log_density
+            + initial_kinetic
+        )
         accepted = (
             torch.log(torch.rand(protocol.walkers, generator=generator))
             < log_acceptance
@@ -437,7 +438,7 @@ def mala(
                 acceptance - target_acceptance
             )
             log_step_size = min(
-                max(log_step_size, math.log(0.01)), math.log(2.0)
+                max(log_step_size, math.log(0.002)), math.log(0.5)
             )
         else:
             production_acceptance.append(acceptance)
@@ -453,6 +454,8 @@ def mala(
     diagnostics.update(
         {
             "active_dimension": dimension,
+            "sampler": SAMPLER_NAME,
+            "leapfrog_steps": HMC_LEAPFROG_STEPS,
             "burnin_acceptance": float(np.mean(burnin_acceptance)),
             "production_acceptance": float(np.mean(production_acceptance)),
             "final_step_size": math.exp(log_step_size),
@@ -615,6 +618,7 @@ def main() -> None:
     payload = {
         "stage": "FEASIBILITY_PROFILE_NOT_CLAIM_EVIDENCE",
         "protocol": {
+            "sampler": SAMPLER_NAME,
             "truths_L": PROTOCOL.truths,
             "posterior_samples_N": PROTOCOL.samples,
             "dimensions": 13,
@@ -659,6 +663,7 @@ def main() -> None:
         "limitations": [
             "This is a one-truth sampler and runtime profile, not Claim 5 evidence.",
             "The paper does not release the fixed source nuisance values; this profile uses a disclosed cited-distribution regime.",
+            "HMC replaces the paper's unreleased MALA implementation; N=20,000 and posterior target are unchanged.",
             "A child must run L=100, N=20,000, 100 regions, and both nuisance regimes before any terminal verdict.",
         ],
     }
