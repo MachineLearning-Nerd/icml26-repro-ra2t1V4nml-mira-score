@@ -118,38 +118,123 @@ def log_density_and_gradient(
     return log_density.detach(), gradient.detach()
 
 
+def map_and_diagonal_mass(
+    observation: torch.Tensor,
+    *,
+    lens_type: str,
+    source_count: int,
+    nuisance_regime: dict[str, object],
+    protocol: Protocol,
+    generator: torch.Generator,
+) -> tuple[torch.Tensor, torch.Tensor, dict[str, object]]:
+    """Data-only multi-start MAP and local-curvature MALA preconditioner."""
+    dimension = active_dimension(lens_type, source_count)
+    search_unit = 0.01 + 0.98 * torch.rand(
+        (64, dimension), generator=generator
+    )
+    search_state = torch.logit(search_unit)
+    search_density, _ = log_density_and_gradient(
+        search_state,
+        observation,
+        lens_type=lens_type,
+        source_count=source_count,
+        nuisance_regime=nuisance_regime,
+        protocol=protocol,
+    )
+    state = search_state[torch.topk(search_density, k=8).indices].clone()
+    first_density = float(search_density.max())
+    first_moment = torch.zeros_like(state)
+    second_moment = torch.zeros_like(state)
+    learning_rate = 0.025
+    for iteration in range(1, 81):
+        density, gradient = log_density_and_gradient(
+            state,
+            observation,
+            lens_type=lens_type,
+            source_count=source_count,
+            nuisance_regime=nuisance_regime,
+            protocol=protocol,
+        )
+        gradient_norm = torch.linalg.vector_norm(gradient, dim=1).clamp_min(1.0)
+        clipped = gradient * (500.0 / gradient_norm).clamp_max(1.0)[:, None]
+        first_moment = 0.9 * first_moment + 0.1 * clipped
+        second_moment = 0.999 * second_moment + 0.001 * clipped.square()
+        corrected_first = first_moment / (1 - 0.9**iteration)
+        corrected_second = second_moment / (1 - 0.999**iteration)
+        state = state + learning_rate * corrected_first / (
+            corrected_second.sqrt() + 1.0e-8
+        )
+        state = state.clamp(-7.0, 7.0)
+
+    optimized_density, optimized_gradient = log_density_and_gradient(
+        state,
+        observation,
+        lens_type=lens_type,
+        source_count=source_count,
+        nuisance_regime=nuisance_regime,
+        protocol=protocol,
+    )
+    best = int(torch.argmax(optimized_density))
+    map_state = state[best].clone()
+    map_gradient = optimized_gradient[best]
+
+    delta = 0.005
+    perturbed = map_state.repeat(2 * dimension, 1)
+    indices = torch.arange(dimension)
+    perturbed[indices, indices] -= delta
+    perturbed[dimension + indices, indices] += delta
+    _, perturbed_gradient = log_density_and_gradient(
+        perturbed,
+        observation,
+        lens_type=lens_type,
+        source_count=source_count,
+        nuisance_regime=nuisance_regime,
+        protocol=protocol,
+    )
+    curvature = (
+        perturbed_gradient[indices, indices]
+        - perturbed_gradient[dimension + indices, indices]
+    ) / (2 * delta)
+    # A positive local precision is required by MALA. Absolute curvature is a
+    # conservative fallback for weakly identified directions at a nonquadratic
+    # misspecified-model optimum.
+    precision = curvature.abs().clamp(1.0e2, 1.0e8)
+    mass = 1.0 / precision
+    diagnostics = {
+        "map_prior_search_log_density": first_density,
+        "map_optimized_log_density": float(optimized_density[best]),
+        "map_gradient_norm": float(torch.linalg.vector_norm(map_gradient)),
+        "mass_diagonal_min": float(mass.min()),
+        "mass_diagonal_max": float(mass.max()),
+        "map_starts": 64,
+        "map_optimized_starts": 8,
+        "map_iterations": 80,
+    }
+    return map_state, mass, diagnostics
+
+
 def mala(
     observation: torch.Tensor,
     *,
     lens_type: str,
     source_count: int,
     nuisance_regime: dict[str, object],
-    truth_unit: torch.Tensor,
     protocol: Protocol,
     seed: int,
 ) -> tuple[torch.Tensor, dict[str, object]]:
     generator = torch.Generator(device="cpu").manual_seed(seed)
     dimension = active_dimension(lens_type, source_count)
-    active_indices = [0, 1, 2]
-    if lens_type == "EPL":
-        active_indices.append(3)
-    for source_index in range(source_count):
-        active_indices.extend(range(4 + 3 * source_index, 7 + 3 * source_index))
-
-    # A dispersed mixture of prior draws and truth-centred draws gives MALA a
-    # chance to expose multiple basins without treating the truth as known.
-    prior_unit = 0.02 + 0.96 * torch.rand(
+    map_state, mass, map_diagnostics = map_and_diagonal_mass(
+        observation,
+        lens_type=lens_type,
+        source_count=source_count,
+        nuisance_regime=nuisance_regime,
+        protocol=protocol,
+        generator=generator,
+    )
+    state = map_state[None, :] + 0.5 * mass.sqrt()[None, :] * torch.randn(
         (protocol.walkers, dimension), generator=generator
     )
-    local_unit = truth_unit[active_indices][None, :] + 0.08 * torch.randn(
-        (protocol.walkers, dimension), generator=generator
-    )
-    local_unit = local_unit.clamp(0.02, 0.98)
-    use_local = (
-        torch.arange(protocol.walkers) % 2 == 0
-    )[:, None].expand(-1, dimension)
-    initial_unit = torch.where(use_local, local_unit, prior_unit)
-    state = torch.logit(initial_unit)
 
     log_density, gradient = log_density_and_gradient(
         state,
@@ -160,7 +245,7 @@ def mala(
         protocol=protocol,
     )
     initial_gradient_norms = torch.linalg.vector_norm(gradient, dim=1)
-    log_step_size = math.log(0.003)
+    log_step_size = math.log(0.5)
     target_acceptance = 0.574
     burnin_acceptance: list[float] = []
     production_acceptance: list[float] = []
@@ -169,11 +254,12 @@ def mala(
     total_steps = protocol.burnin_steps + protocol.sampling_steps
     for step in range(total_steps):
         step_size = math.exp(log_step_size)
-        drift = 0.5 * step_size**2 * gradient
+        drift = 0.5 * step_size**2 * gradient * mass
         proposed = (
             state
             + drift
             + step_size
+            * mass.sqrt()
             * torch.randn(
                 state.shape, dtype=state.dtype, generator=generator
             )
@@ -186,12 +272,12 @@ def mala(
             nuisance_regime=nuisance_regime,
             protocol=protocol,
         )
-        proposed_drift = 0.5 * step_size**2 * proposed_gradient
+        proposed_drift = 0.5 * step_size**2 * proposed_gradient * mass
         forward = -0.5 * (
-            (proposed - state - drift) ** 2
+            (proposed - state - drift) ** 2 / mass
         ).sum(dim=1) / step_size**2
         reverse = -0.5 * (
-            (state - proposed - proposed_drift) ** 2
+            (state - proposed - proposed_drift) ** 2 / mass
         ).sum(dim=1) / step_size**2
         log_acceptance = proposed_density - log_density + reverse - forward
         accepted = (
@@ -210,7 +296,7 @@ def mala(
                 acceptance - target_acceptance
             )
             log_step_size = min(
-                max(log_step_size, math.log(0.00005)), math.log(0.1)
+                max(log_step_size, math.log(0.01)), math.log(2.0)
             )
         else:
             production_acceptance.append(acceptance)
@@ -222,6 +308,7 @@ def mala(
         flat_unit, lens_type=lens_type, source_count=source_count
     )
     diagnostics = chain_diagnostics(chain)
+    diagnostics.update(map_diagnostics)
     diagnostics.update(
         {
             "active_dimension": dimension,
@@ -366,7 +453,6 @@ def main() -> None:
                 lens_type=lens_type,
                 source_count=source_count,
                 nuisance_regime=regime,
-                truth_unit=truths_unit[truth_index],
                 protocol=PROTOCOL,
                 seed=SEED + 10_000 * model_index + truth_index,
             )
