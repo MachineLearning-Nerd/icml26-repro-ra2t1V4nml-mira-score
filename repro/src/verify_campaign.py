@@ -17,6 +17,7 @@ def load(path: Path) -> dict:
 def main() -> None:
     null_evidence = load(ROOT / "outputs" / "claims_1_2.json")
     claim4 = load(OPENRESEARCH / "claim_4" / "verifier_output.json")
+    claim6 = load(OPENRESEARCH / "claim_6" / "verifier_output.json")
     laplace_cells_pass = all(
         abs(
             row["value"]
@@ -45,6 +46,7 @@ def main() -> None:
             "passed": null_evidence["asymptotic_reference_convergence"],
         },
         {"claim_id": 4, "verdict": claim4["verdict"], "passed": claim4["verdict"] == "VERIFIED"},
+        {"claim_id": 6, "verdict": claim6["verdict"], "passed": claim6["verdict"] == "VERIFIED"},
     ]
     payload = {
         "paper": "2605.02014",
