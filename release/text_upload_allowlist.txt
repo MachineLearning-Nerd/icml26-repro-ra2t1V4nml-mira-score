@@ -35,9 +35,12 @@ evidence/claim_6/verifier_output.json
 logbook.json
 pages/claim-4-exact-lower-bound/page.md
 pages/claim-5-physical-lensing-release-audit/page.md
+pages/claim-5-posterior-approaches/page.md
 pages/claim-6-galaxy-images/page.md
 pages/cumulative-release-summary/page.md
 pages/release-integrity/page.md
+reports/claim5-three-approach/images/posterior_diagnostics.svg
+reports/claim5-three-approach/report.md
 reports/mira-reproduction/images/claim4_certificate.svg
 reports/mira-reproduction/images/claim5_blockers.svg
 reports/mira-reproduction/images/claim6_controls.svg

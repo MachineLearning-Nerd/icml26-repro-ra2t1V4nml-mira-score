@@ -119,9 +119,15 @@ listing their values and gives no dependency versions or seeds. The one
 released `model_misspecification_tarp_data.npz` is an aggregate TARP result,
 not MIRA input.
 
-A guessed implementation would spend roughly the paper’s 13.33 CPU-hours
-answering a different question. The earlier 100-D GMM remains historical
-evidence but is not counted for this claim.
+A clean-room physical reconstruction was nevertheless tested with three
+materially different posterior estimators: preconditioned HMC, an
+affine-invariant ensemble sampler, and adaptive multiscale importance
+sampling. HMC failed split-R̂ for three misspecified posteriors; importance
+sampling collapsed to ESS 1.09–10.26 of 20,000; and a four-times-longer affine
+run still had split-R̂ 1.587 and 2.941 for the two 3-Sérsic targets. All
+favorable MIRA rankings were therefore rejected by the predeclared gate.
+[The illustrated sampler audit](../claim5-three-approach/report.md) records the
+full diagnostics and lineage.
 
 ## Controls, provenance, and compute
 
@@ -135,9 +141,14 @@ evaluation, and limitations under `.openresearch/artifacts/`.
 | [`claim-6-exact-released-galaxy-tensors`](https://github.com/MachineLearning-Nerd/icml26-repro-ra2t1V4nml-mira-score/tree/orx/claim-6-exact-released-galaxy-tensors) | `norm=True` ambiguity sibling | Failed remaining-order gate | 75.03 s |
 | [`claim-6-released-default-without-normalization`](https://github.com/MachineLearning-Nerd/icml26-repro-ra2t1V4nml-mira-score/tree/orx/claim-6-released-default-without-normalization) | Exact author tensors, released default | VERIFIED | 41.00 s |
 | [`claim-5-exact-release-completeness-audit`](https://github.com/MachineLearning-Nerd/icml26-repro-ra2t1V4nml-mira-score/tree/orx/claim-5-exact-release-completeness-audit) | Pinned release audit | BLOCKED | 39.47 s |
+| [`claim-5-preconditioned-hmc-posterior`](https://github.com/MachineLearning-Nerd/icml26-repro-ra2t1V4nml-mira-score/tree/orx/claim-5-preconditioned-hmc-posterior) | Exact-MH HMC profile | Rejected convergence gate | 29m03s HF CPU |
+| [`claim-5-affine-ensemble-posterior`](https://github.com/MachineLearning-Nerd/icml26-repro-ra2t1V4nml-mira-score/tree/orx/claim-5-affine-ensemble-posterior) | Affine ensemble profile | Rejected convergence gate | 20m04s HF CPU |
+| [`claim-5-adaptive-importance-posterior`](https://github.com/MachineLearning-Nerd/icml26-repro-ra2t1V4nml-mira-score/tree/orx/claim-5-adaptive-importance-posterior) | Adaptive importance profile | Rejected ESS/weight gate | 4m29s HF CPU |
+| [`claim-5-long-affine-convergence`](https://github.com/MachineLearning-Nerd/icml26-repro-ra2t1V4nml-mira-score/tree/orx/claim-5-long-affine-convergence) | Extended affine profile | Rejected convergence gate | 41m11s HF CPU |
 
-All new formal runs used the local Apple-arm CPU and cost $0. Hugging Face
-`cpu-upgrade` was unnecessary. Historical judged evidence includes five prior
+Terminal evidence was regenerated on local Apple-arm CPU. The Claim 5 sampler
+audit consumed 94m47s of HF `cpu-upgrade`; the orchestration logs did not expose
+a billed cost. No GPU was used. Historical judged evidence includes five prior
 T4 jobs; this campaign preserved but did not rerun or expand them.
 
 ## Assessment
@@ -148,7 +159,7 @@ important boundaries: Claim 6’s exact plotted numbers are not reproduced from
 the published configuration, and Claim 5 cannot be faithfully tested from the
 released record.
 
-The release candidate is prepared but unpublished. The judged Space revision
-remains preserved, the old file set is a subset of the candidate tree, and a
-text-only upload allowlist is ready. No score increase should be inferred until
-the live judge evaluates a future approved Hugging Face revision.
+The release candidate preserves the judged Space file set and is published
+through an exact text-only allowlist after explicit approval. No score increase
+should be inferred until the live judge evaluates the new Hugging Face
+revision.

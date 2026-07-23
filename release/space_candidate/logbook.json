@@ -10,7 +10,7 @@
     "icml2026-repro",
     "paper-ra2t1V4nml"
   ],
-  "updated_at": "2026-07-23T09:15:00+00:00",
+  "updated_at": "2026-07-23T13:18:32+00:00",
   "root": {
     "slug": "index",
     "title": "Reproduction: MIRA: A Score for Conditional Distribution Accuracy and Model Comparison",
@@ -65,6 +65,12 @@
         "children": []
       },
       {
+        "slug": "claim-5-posterior-approaches",
+        "title": "Claim 5: three posterior approaches",
+        "file": "pages/claim-5-posterior-approaches/page.md",
+        "children": []
+      },
+      {
         "slug": "claim-6-galaxy-images",
         "title": "Claim 6: exact released galaxy tensors",
         "file": "pages/claim-6-galaxy-images/page.md",
@@ -91,5 +97,5 @@
     ]
   },
   "agent_view_tokens": 6200,
-  "revision": "candidate-unpublished-20260723"
+  "revision": "published-candidate-awaiting-judge-20260723"
 }

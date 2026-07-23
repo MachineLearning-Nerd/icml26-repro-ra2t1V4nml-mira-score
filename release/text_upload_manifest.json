@@ -1,10 +1,10 @@
 {
   "target_space_id": "DineshAI/ra2t1V4nml",
   "judged_revision": "c085dd81ad770a2e017b773bc62b619a7f0e69a3",
-  "publication_approved": false,
+  "publication_approved": true,
   "publication_performed": false,
   "text_only": true,
-  "file_count": 46,
+  "file_count": 49,
   "files": [
     {
       "path": "evidence/claim_4/EVAL.md",
@@ -178,8 +178,8 @@
     },
     {
       "path": "logbook.json",
-      "sha256": "22b0b53070d5fcb0b8812b5717d50c5993fbe527a6f07b9268399b3e5a8a99cd",
-      "bytes": 3802
+      "sha256": "9420566d792c09a12fea615b73dc10f3dc9308760a0489b6c0d0f81913927960",
+      "bytes": 4021
     },
     {
       "path": "pages/claim-4-exact-lower-bound/page.md",
@@ -188,8 +188,13 @@
     },
     {
       "path": "pages/claim-5-physical-lensing-release-audit/page.md",
-      "sha256": "d36c742e1322160b5d8257c8a892f9cd7accadf55150b733b014a9a32dca5073",
-      "bytes": 1379
+      "sha256": "3c26f6f317d163e39626270e95eb86c9d85286b72f4b14945fcf42b88a7276b6",
+      "bytes": 1853
+    },
+    {
+      "path": "pages/claim-5-posterior-approaches/page.md",
+      "sha256": "ffef31c7c5198b98a2b4a7ee6d240fb59270e73bfbc58473806e7a17341a659f",
+      "bytes": 1225
     },
     {
       "path": "pages/claim-6-galaxy-images/page.md",
@@ -198,13 +203,23 @@
     },
     {
       "path": "pages/cumulative-release-summary/page.md",
-      "sha256": "d882e909f0f5c3ae83a5d06230c3b1bf151115302f0856979b0c81b9e6d2d962",
-      "bytes": 1982
+      "sha256": "483dbe68d4c540ff4b1dc1c4525989ac9270e1e7a9101b3d1e80afee1532382f",
+      "bytes": 2076
     },
     {
       "path": "pages/release-integrity/page.md",
-      "sha256": "028b080e94840f3638432ffd2c96b325ba19204cd65c38386e59e215c7fb138a",
-      "bytes": 1123
+      "sha256": "4ab88bdb0cacf1c19e77fa2b566d20b220586b6597589a47e0e92658fb5443cf",
+      "bytes": 1187
+    },
+    {
+      "path": "reports/claim5-three-approach/images/posterior_diagnostics.svg",
+      "sha256": "dd667d0b6eaaa645b06b59f0e8e005ac72eb5b53f91bf7f7e4d2312a74aa188e",
+      "bytes": 4916
+    },
+    {
+      "path": "reports/claim5-three-approach/report.md",
+      "sha256": "f3985b71440a576394773d6e59b641ecc1b2aacf6beab5f02a0b790bc060e5b6",
+      "bytes": 4904
     },
     {
       "path": "reports/mira-reproduction/images/claim4_certificate.svg",
@@ -233,8 +248,8 @@
     },
     {
       "path": "reports/mira-reproduction/report.md",
-      "sha256": "a75568060aeccf77f54e497d86d9bfbe1089d77b0afc8aea92f28c1fe196b648",
-      "bytes": 8765
+      "sha256": "ac1a02d38bcb1084359d943fe62a83fda395032292004955e4f33fab4de88693",
+      "bytes": 10151
     }
   ]
 }

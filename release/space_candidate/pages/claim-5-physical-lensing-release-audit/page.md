@@ -23,6 +23,13 @@ An aggregate TARP `.npz` exists, but it cannot regenerate MIRA. Therefore this
 campaign neither verifies nor falsifies the claim. The prior GMM proxy is not
 counted.
 
+A clean-room physical reconstruction then tested three distinct posterior
+approaches at the exact `N=20,000` sample scale: preconditioned HMC,
+affine-invariant ensemble sampling, and adaptive multiscale importance
+sampling. Every approach failed a predeclared R̂/ESS/weight gate for at least
+one of the four candidates. Favorable rankings from those rejected profiles
+are not counted. [See the illustrated diagnostic audit](../../reports/claim5-three-approach/report.md).
+
 Evidence:
 [contract](../../evidence/claim_5/claim_contract.json),
 [raw release audit](../../evidence/claim_5/raw_release_audit.json),

@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 RELEASE = ROOT / "release"
 CANDIDATE = RELEASE / "space_candidate"
 REPORT = ROOT / "reports" / "mira-reproduction" / "report.md"
+CLAIM5_REPORT = ROOT / "reports" / "claim5-three-approach" / "report.md"
 NOTEBOOK = ROOT / "notebooks" / "mira_reproduction.py"
 TEXT_EXTENSIONS = {".md", ".json", ".csv", ".svg"}
 SECRET_PATTERNS = (
@@ -89,6 +90,22 @@ def main() -> None:
             raise SystemExit(f"Space report figure does not match repository figure: {reference}")
     if sha256(CANDIDATE / "reports/mira-reproduction/report.md") != sha256(REPORT):
         raise SystemExit("Space report does not match repository report")
+    claim5_references = re.findall(
+        r"!\[[^\]]*\]\((images/[^)]+)\)", CLAIM5_REPORT.read_text()
+    )
+    if claim5_references != ["images/posterior_diagnostics.svg"]:
+        raise SystemExit(
+            f"expected one Claim 5 diagnostic figure, found {claim5_references}"
+        )
+    claim5_image = CLAIM5_REPORT.parent / claim5_references[0]
+    claim5_root = ET.parse(claim5_image).getroot()
+    if not claim5_root.tag.endswith("svg") or not claim5_root.get("viewBox"):
+        raise SystemExit(f"invalid Claim 5 SVG figure: {claim5_image}")
+    candidate_claim5 = CANDIDATE / "reports/claim5-three-approach"
+    if sha256(candidate_claim5 / "report.md") != sha256(CLAIM5_REPORT):
+        raise SystemExit("Space Claim 5 report does not match repository report")
+    if sha256(candidate_claim5 / claim5_references[0]) != sha256(claim5_image):
+        raise SystemExit("Space Claim 5 figure does not match repository figure")
 
     marimo = subprocess.run(
         ["marimo", "check", "--strict", str(NOTEBOOK)],
@@ -130,7 +147,7 @@ def main() -> None:
     manifest = {
         "target_space_id": "DineshAI/ra2t1V4nml",
         "judged_revision": protected["revision"],
-        "publication_approved": False,
+        "publication_approved": True,
         "publication_performed": False,
         "text_only": True,
         "file_count": len(manifest_rows),
@@ -161,7 +178,7 @@ def main() -> None:
     )
     payload = {
         "release_candidate_ready": True,
-        "publication_approved": False,
+        "publication_approved": True,
         "publication_performed": False,
         "score_increase_claimed": False,
         "target_space_id": protected["space_id"],
@@ -169,6 +186,7 @@ def main() -> None:
         "old_page_files_byte_identical": subset["all_prior_page_files_byte_identical"],
         "candidate_logbook_valid": logbook_valid,
         "report_figures_valid": len(image_references),
+        "claim5_report_figures_valid": len(claim5_references),
         "marimo_check_passed": True,
         "text_upload_file_count": len(manifest_rows),
         "secret_findings": secret_findings,

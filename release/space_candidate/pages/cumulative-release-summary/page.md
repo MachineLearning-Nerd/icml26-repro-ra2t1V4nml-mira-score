@@ -21,9 +21,8 @@ code, fixed constants, versions, and seeds were not released.
 | 5 | BLOCKED | Complete pinned release audit; no proxy substituted |
 | 6 | VERIFIED | Exact author tensors; full-scale parity and controls |
 
-The prior live-judge score is **7/12**. This candidate makes no score forecast
-and has not been published. A score can change only after explicit publication
-approval and a new live judge verdict.
+The prior live-judge score is **7/12**. This published candidate makes no score
+forecast. A score can change only after a new live judge verdict.
 
 [Read the illustrated cumulative report](../../reports/mira-reproduction/report.md).
 
@@ -31,8 +30,10 @@ approval and a new live judge verdict.
 <!-- trackio-cell
 {"type": "markdown", "id": "cell_mira_release_scope", "created_at": "2026-07-23T09:15:00+00:00", "title": "Compute and scope"}
 -->
-All new formal runs used local Apple-arm CPU and cost $0. Hugging Face compute
-was unnecessary. The fixed command on every experiment node is:
+Terminal evidence was regenerated on local Apple-arm CPU. Three additional
+Claim 5 approaches and one longer affine refinement used 94m47s of Hugging Face
+`cpu-upgrade`; no GPU was used and the orchestration logs did not expose billed
+cost. The fixed command on every experiment node is:
 
 ```bash
 uv run --frozen python repro/src/run_campaign.py

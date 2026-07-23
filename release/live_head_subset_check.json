@@ -1,0 +1,17 @@
+{
+  "space_id": "DineshAI/ra2t1V4nml",
+  "observed_live_revision": "ada5f26e3b242dc74dfc079a420c62a1cdb90e92",
+  "observed_at_utc": "2026-07-23T13:18:32Z",
+  "live_file_count": 20,
+  "candidate_file_count": 68,
+  "live_file_set_is_subset": true,
+  "byte_identical_live_files": 19,
+  "additively_changed_live_files": [
+    "logbook.json"
+  ],
+  "changed_file_reason": {
+    "logbook.json": "central manifest extended to index additive evidence and report pages"
+  },
+  "all_live_page_files_byte_identical": true,
+  "concurrent_change_assessment": "The live head differed from the judged revision only in logbook updated_at and revision metadata; no page path or evidence content changed."
+}

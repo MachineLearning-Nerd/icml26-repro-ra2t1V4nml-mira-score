@@ -17,9 +17,9 @@ release verifier.
 <!-- trackio-cell
 {"type": "markdown", "id": "cell_mira_release_gate", "created_at": "2026-07-23T09:15:00+00:00", "title": "Publication state", "pinned": true, "pinned_at": "2026-07-23T09:15:00+00:00"}
 -->
-**UNPUBLISHED — EXPLICIT APPROVAL REQUIRED.**
+**PUBLISHED CANDIDATE — AWAITING LIVE JUDGE.**
 
 No second Space has been created. The allowlist targets only
 `DineshAI/ra2t1V4nml` and contains text files. No token, credential, wrapper, or
-environment value is included. A score increase is not claimed before a new
-live judge verdict.
+environment value is included. Publication was explicitly approved by the user
+on 2026-07-23. A score increase is not claimed before a new live judge verdict.

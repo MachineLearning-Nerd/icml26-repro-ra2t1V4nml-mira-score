@@ -2,12 +2,14 @@
 
 - Baseline live-judge score: `7/12`
 - Current terminal evidence: Claims 1–4 and 6 `VERIFIED`; Claim 5 `BLOCKED`
-- Publication state: **not published; explicit approval required**
+- Publication state: **approved 2026-07-23; publishing to the existing Space**
 - Score increase claimed: **no**
-- Compute for new campaign: local Apple-arm CPU, $0; no GPU, no HF CPU fallback
-- Winning lineage: `orx/cumulative-release-candidate-and-report`
+- Compute for terminal evidence: local Apple-arm CPU; Claim 5 sampler audit:
+  94m47s HF `cpu-upgrade`; no GPU; billed cost not exposed in run logs
+- Winning publication lineage: `orx/publish-cumulative-10-of-12-candidate`
 - Fixed command: `uv run --frozen python repro/src/run_campaign.py`
 - Detailed report: `reports/mira-reproduction/report.md`
+- Claim 5 sampler audit: `reports/claim5-three-approach/report.md`
 - Tutorial: `notebooks/mira_reproduction.py`
 - Space candidate: `release/space_candidate/`
 - Text upload allowlist: `release/text_upload_allowlist.txt`
