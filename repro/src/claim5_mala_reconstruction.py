@@ -62,10 +62,10 @@ class Protocol:
 # it must replace only this committed protocol with the paper scale.
 PROTOCOL = Protocol(
     truths=1,
-    walkers=16,
-    burnin_steps=20,
-    sampling_steps=20,
-    regions=20,
+    walkers=100,
+    burnin_steps=200,
+    sampling_steps=200,
+    regions=100,
 )
 
 

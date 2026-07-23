@@ -48,6 +48,16 @@ def main() -> None:
             0.01 <= row["production_acceptance"] <= 0.99
             for row in diagnostics
         ),
+        "paper_N_chain_convergence": (
+            protocol["posterior_samples_N"] != 20_000
+            or all(
+                row["rhat_max"] is not None
+                and row["rhat_max"] <= 1.20
+                and row["ess_min"] is not None
+                and row["ess_min"] >= 400
+                for row in diagnostics
+            )
+        ),
         "raw_cell_count": len(cells)
         == protocol["regions"] * len(summary["models"]) * protocol["truths_L"],
         "cpu_only": summary["environment"]["device"] == "cpu",
