@@ -62,11 +62,13 @@ class Protocol:
 # it must replace only this committed protocol with the paper scale.
 PROTOCOL = Protocol(
     truths=1,
-    walkers=100,
-    burnin_steps=200,
-    sampling_steps=200,
+    walkers=32,
+    burnin_steps=500,
+    sampling_steps=625,
     regions=100,
 )
+SAMPLER_NAME = "affine_invariant_stretch"
+STRETCH_SCALE = 2.0
 
 
 def git_sha() -> str:
@@ -350,7 +352,7 @@ def mala(
 ) -> tuple[torch.Tensor, dict[str, object]]:
     generator = torch.Generator(device="cpu").manual_seed(seed)
     dimension = active_dimension(lens_type, source_count)
-    map_state, precision, mass, cholesky, map_diagnostics = map_and_full_mass(
+    map_state, _, _, cholesky, map_diagnostics = map_and_full_mass(
         observation,
         lens_type=lens_type,
         source_count=source_count,
@@ -358,7 +360,7 @@ def mala(
         protocol=protocol,
         generator=generator,
     )
-    state = map_state[None, :] + 0.05 * (
+    state = map_state[None, :] + 0.5 * (
         torch.randn(
             (protocol.walkers, dimension), generator=generator
         )
@@ -374,71 +376,61 @@ def mala(
         protocol=protocol,
     )
     initial_gradient_norms = torch.linalg.vector_norm(gradient, dim=1)
-    log_step_size = math.log(0.5)
-    target_acceptance = 0.574
     burnin_acceptance: list[float] = []
     production_acceptance: list[float] = []
     chains: list[torch.Tensor] = []
 
     total_steps = protocol.burnin_steps + protocol.sampling_steps
     for step in range(total_steps):
-        step_size = math.exp(log_step_size)
-        drift = 0.5 * step_size**2 * (gradient @ mass)
-        proposed = (
-            state
-            + drift
-            + step_size
-            * (
-                torch.randn(
-                state.shape, dtype=state.dtype, generator=generator
+        half_acceptance: list[float] = []
+        for parity in (0, 1):
+            active = torch.arange(parity, protocol.walkers, 2)
+            complement = torch.arange(1 - parity, protocol.walkers, 2)
+            partner = complement[
+                torch.randint(
+                    0,
+                    complement.numel(),
+                    (active.numel(),),
+                    generator=generator,
                 )
-                @ cholesky.T
+            ]
+            lower = 1.0 / math.sqrt(STRETCH_SCALE)
+            upper = math.sqrt(STRETCH_SCALE)
+            stretch = (
+                lower
+                + (upper - lower)
+                * torch.rand(active.numel(), generator=generator)
+            ).square()
+            proposed = state[partner] + stretch[:, None] * (
+                state[active] - state[partner]
             )
-        )
-        proposed_density, proposed_gradient = log_density_and_gradient(
-            proposed,
-            observation,
-            lens_type=lens_type,
-            source_count=source_count,
-            nuisance_regime=nuisance_regime,
-            protocol=protocol,
-        )
-        proposed_drift = 0.5 * step_size**2 * (proposed_gradient @ mass)
-        forward_residual = proposed - state - drift
-        reverse_residual = state - proposed - proposed_drift
-        forward = (
-            -0.5
-            * torch.einsum(
-                "bi,ij,bj->b", forward_residual, precision, forward_residual
+            proposed_density, _ = log_density_and_gradient(
+                proposed,
+                observation,
+                lens_type=lens_type,
+                source_count=source_count,
+                nuisance_regime=nuisance_regime,
+                protocol=protocol,
             )
-            / step_size**2
-        )
-        reverse = (
-            -0.5
-            * torch.einsum(
-                "bi,ij,bj->b", reverse_residual, precision, reverse_residual
+            log_acceptance = (
+                (dimension - 1) * stretch.log()
+                + proposed_density
+                - log_density[active]
             )
-            / step_size**2
-        )
-        log_acceptance = proposed_density - log_density + reverse - forward
-        accepted = (
-            torch.log(torch.rand(protocol.walkers, generator=generator))
-            < log_acceptance
-        )
-        state = torch.where(accepted[:, None], proposed, state)
-        log_density = torch.where(accepted, proposed_density, log_density)
-        gradient = torch.where(accepted[:, None], proposed_gradient, gradient)
-        acceptance = float(accepted.float().mean())
+            accepted = (
+                torch.log(
+                    torch.rand(active.numel(), generator=generator)
+                )
+                < log_acceptance
+            )
+            accepted_indices = active[accepted]
+            state[accepted_indices] = proposed[accepted]
+            log_density[accepted_indices] = proposed_density[accepted]
+            half_acceptance.append(float(accepted.float().mean()))
+        acceptance = float(np.mean(half_acceptance))
 
         if step < protocol.burnin_steps:
             burnin_acceptance.append(acceptance)
-            adaptation_rate = 0.35 / math.sqrt(step + 1)
-            log_step_size += adaptation_rate * (
-                acceptance - target_acceptance
-            )
-            log_step_size = min(
-                max(log_step_size, math.log(0.01)), math.log(2.0)
-            )
         else:
             production_acceptance.append(acceptance)
             chains.append(state.sigmoid().detach().clone())
@@ -453,9 +445,10 @@ def mala(
     diagnostics.update(
         {
             "active_dimension": dimension,
+            "sampler": SAMPLER_NAME,
+            "stretch_scale": STRETCH_SCALE,
             "burnin_acceptance": float(np.mean(burnin_acceptance)),
             "production_acceptance": float(np.mean(production_acceptance)),
-            "final_step_size": math.exp(log_step_size),
             "initial_gradient_norm_median": float(
                 initial_gradient_norms.median()
             ),
@@ -615,6 +608,7 @@ def main() -> None:
     payload = {
         "stage": "FEASIBILITY_PROFILE_NOT_CLAIM_EVIDENCE",
         "protocol": {
+            "sampler": SAMPLER_NAME,
             "truths_L": PROTOCOL.truths,
             "posterior_samples_N": PROTOCOL.samples,
             "dimensions": 13,
@@ -659,6 +653,7 @@ def main() -> None:
         "limitations": [
             "This is a one-truth sampler and runtime profile, not Claim 5 evidence.",
             "The paper does not release the fixed source nuisance values; this profile uses a disclosed cited-distribution regime.",
+            "An affine-invariant ensemble sampler replaces the paper's unreleased MALA implementation; N=20,000 and posterior target are unchanged.",
             "A child must run L=100, N=20,000, 100 regions, and both nuisance regimes before any terminal verdict.",
         ],
     }
