@@ -7,21 +7,20 @@ app = marimo.App(width="medium")
 @app.cell
 def _():
     import marimo as mo
+
     return (mo,)
 
 
 @app.cell
 def _(mo):
-    mo.md(
-        r"""
-        # MIRA claim-by-claim reproduction
+    mo.md(r"""
+    # MIRA claim-by-claim reproduction
 
-        **Evidence first:** five claims are `VERIFIED`; the 13-dimensional
-        physical-lensing claim is `BLOCKED` because its raw posterior inputs
-        and essential protocol details were not released. This notebook embeds
-        the small final results, so opening it does not rerun expensive work.
-        """
-    )
+    **Evidence first:** five claims are `VERIFIED`; the 13-dimensional
+    physical-lensing claim is `BLOCKED` because its raw posterior inputs
+    and essential protocol details were not released. This notebook embeds
+    the small final results, so opening it does not rerun expensive work.
+    """)
     return
 
 
@@ -36,7 +35,7 @@ def _(mo):
         {"claim": 6, "verdict": "VERIFIED", "evidence": "exact L=16, d=12,288 tensors"},
     ]
     mo.ui.table(claim_rows, selection=None, label="Terminal claim evidence")
-    return (claim_rows,)
+    return
 
 
 @app.cell
@@ -67,31 +66,29 @@ def _(mo):
             mo.ui.table(rows, selection=None),
         ]
     )
-    return labels, observed_scores, paper_scores, rows
+    return
 
 
 @app.cell
 def _(mo):
-    mo.md(
-        r"""
-        ## Why MIRA tends toward 2/3
+    mo.md(r"""
+    ## Why MIRA tends toward 2/3
 
-        If candidate and truth match, the random region mass is uniform. After
-        Laplace smoothing, the score distribution converges to `Beta(2, 1)`,
-        whose mean is `2/3` and variance is `1/18`.
+    If candidate and truth match, the random region mass is uniform. After
+    Laplace smoothing, the score distribution converges to `Beta(2, 1)`,
+    whose mean is `2/3` and variance is `1/18`.
 
-        The finite lower-bound identity used in Claim 4 is
+    The finite lower-bound identity used in Claim 4 is
 
-        \[
-        \mu_{\mathrm{MIRA}}
-        = \frac{1}{2} + \frac{N}{N+2}
-          \left(2\,\mathbb{E}[U T(U)]-\mathbb{E}[T(U)]\right).
-        \]
+    \[
+    \mu_{\mathrm{MIRA}}
+    = \frac{1}{2} + \frac{N}{N+2}
+      \left(2\,\mathbb{E}[U T(U)]-\mathbb{E}[T(U)]\right).
+    \]
 
-        Under the proposition's continuous radial-CDF assumptions, `T` is
-        nondecreasing, so the bracket is nonnegative.
-        """
-    )
+    Under the proposition's continuous radial-CDF assumptions, `T` is
+    nondecreasing, so the bracket is nonnegative.
+    """)
     return
 
 
@@ -111,7 +108,7 @@ def _(mo):
             mo.ui.table(controls, selection=None),
         ]
     )
-    return controls, intact, rolled
+    return
 
 
 @app.cell
@@ -134,26 +131,24 @@ def _(mo):
         ),
         kind="warn",
     )
-    return (missing,)
+    return
 
 
 @app.cell
 def _(mo):
-    mo.md(
-        """
-        ## Reproduce locally
+    mo.md("""
+    ## Reproduce locally
 
-        ```bash
-        uv sync --frozen
-        uv run --frozen python repro/src/run_campaign.py
-        ```
+    ```bash
+    uv sync --frozen
+    uv run --frozen python repro/src/run_campaign.py
+    ```
 
-        Formal experiments use that exact command on every branch. The report
-        beside this notebook contains source hashes, branch links, runtime,
-        deviations, and the publication gate. No Hugging Face revision was
-        published without explicit approval.
-        """
-    )
+    Formal experiments use that exact command on every branch. The report
+    beside this notebook contains source hashes, branch links, runtime,
+    deviations, and the publication gate. No Hugging Face revision was
+    published without explicit approval.
+    """)
     return
 
 

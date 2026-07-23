@@ -91,7 +91,7 @@ def main() -> None:
         raise SystemExit("Space report does not match repository report")
 
     marimo = subprocess.run(
-        ["marimo", "check", str(NOTEBOOK)],
+        ["marimo", "check", "--strict", str(NOTEBOOK)],
         cwd=ROOT,
         check=False,
         capture_output=True,
