@@ -18,6 +18,13 @@ tensors. `notebooks/main_plotting.ipynb` records the paper scores
 `[0.6442, 0.5783, 0.5298, 0.5056]` and errors
 `[0.0606, 0.0728, 0.0748, 0.0690]` in the condition order above.
 
+The paper does not state a normalization flag for the MIRA calculation. The
+released `mira` function defaults to `norm=False`. The separate TARP notebook
+sets `norm=True`, but that argument belongs to the TARP baseline calculation,
+not a published MIRA invocation. This node therefore tests the released MIRA
+default. Its sibling retains the `norm=True` result as an explicit ambiguity
+audit.
+
 Quantifier tested: on these exact released evaluation tensors at the paper's
 full scale and `L=16`, the correctly specified condition ranks first and each
 stated prior/noise misspecification reduces MIRA.

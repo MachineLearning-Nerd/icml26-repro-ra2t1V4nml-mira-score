@@ -8,6 +8,10 @@
 - The paper does not publish the random seed used for its 100 MIRA regions.
   This reproduction pre-registers seed `260502014`; a score tolerance of 0.03
   is narrower than the paper's reported per-region standard deviations.
+- The paper does not report the MIRA normalization flag. This node uses the
+  released API default `norm=False`. A retained sibling evaluates `norm=True`;
+  that path still identifies the true model but does not recover the remaining
+  published ordering.
 - The paper's plotted error bars are hardcoded in its plotting notebook and
   are not labeled with a precise estimator there. We report both the
   across-region standard deviation and a paired two-axis bootstrap interval.

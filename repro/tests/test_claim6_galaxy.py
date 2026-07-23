@@ -13,7 +13,7 @@ def test_claim6_evidence_is_full_scale_and_verified() -> None:
         "dimensions": 12_288,
         "image_shape": [64, 64, 3],
         "regions": 100,
-        "norm": True,
+        "norm": False,
         "center_distribution": "Uniform[0,1]^12288",
         "scoring_seed": 260502014,
     }

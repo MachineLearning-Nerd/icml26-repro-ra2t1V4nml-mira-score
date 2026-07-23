@@ -26,6 +26,7 @@ BASE_URL = (
     f"{AUTHOR_COMMIT}/data/lens_exp"
 )
 NUM_RUNS = 100
+NORMALIZE = False
 SEED = 260502014
 BOOTSTRAP_SEED = 620052014
 BOOTSTRAP_REPLICATES = 10_000
@@ -124,32 +125,37 @@ def score_one_model(
     posterior: torch.Tensor,
     centers: torch.Tensor,
     reference_indices: torch.Tensor,
+    normalize: bool,
 ) -> tuple[torch.Tensor, torch.Tensor]:
-    """Match released ``mira(..., norm=True)`` while avoiding a 4-D distance tensor."""
+    """Match released ``mira`` while avoiding a 4-D distance tensor."""
     sample_count = posterior.shape[1]
-    truth_min = truth.min(dim=0, keepdim=True).values
-    truth_range = truth.max(dim=0, keepdim=True).values - truth_min + 1e-8
-    truth_normalized = (truth - truth_min) / truth_range
-    posterior_normalized = (posterior - truth_min) / truth_range
+    if normalize:
+        truth_min = truth.min(dim=0, keepdim=True).values
+        truth_range = truth.max(dim=0, keepdim=True).values - truth_min + 1e-8
+        truth_scored = (truth - truth_min) / truth_range
+        posterior_scored = (posterior - truth_min) / truth_range
+    else:
+        truth_scored = truth
+        posterior_scored = posterior
 
     # Exact Euclidean ordering via squared distances. torch.bmm computes all
     # 100 region centers in one CPU BLAS call for each of the 16 truth blocks.
-    posterior_sq = (posterior_normalized * posterior_normalized).sum(dim=2)
+    posterior_sq = (posterior_scored * posterior_scored).sum(dim=2)
     center_by_truth = centers.permute(1, 2, 0).contiguous()
-    cross = torch.bmm(posterior_normalized, center_by_truth)
+    cross = torch.bmm(posterior_scored, center_by_truth)
     center_sq = (centers * centers).sum(dim=2).transpose(0, 1)
     distances_sq = (posterior_sq[:, :, None] + center_sq[:, None, :] - 2 * cross).clamp_min_(0)
     distances_sq = distances_sq.permute(2, 0, 1).contiguous()  # (runs, truths, samples)
 
     radii_sq = distances_sq.gather(2, reference_indices[:, :, None]).squeeze(2)
     counts = (distances_sq < radii_sq[:, :, None]).sum(dim=2)
-    truth_sq = ((centers - truth_normalized[None, :, :]) ** 2).sum(dim=2)
+    truth_sq = ((centers - truth_scored[None, :, :]) ** 2).sum(dim=2)
     hit = truth_sq <= radii_sq
     # This is algebraically identical to the released normalized score:
     # ((counts+1)/(S+1))/(S/(S+1)) if hit, else ((S-counts)/(S+1))/(S/(S+1)).
     calibrated = torch.where(hit, counts + 1, sample_count - counts).to(torch.float64) / sample_count
 
-    rolled_truth = truth_normalized.roll(shifts=1, dims=0)
+    rolled_truth = truth_scored.roll(shifts=1, dims=0)
     rolled_truth_sq = ((centers - rolled_truth[None, :, :]) ** 2).sum(dim=2)
     rolled_hit = rolled_truth_sq <= radii_sq
     negative = torch.where(
@@ -213,7 +219,7 @@ def main() -> None:
     for model_index in range(4):
         posterior = load_tensor(f"posterior{model_index}.pt").reshape(16, 64, 3 * 64 * 64)
         scores, negative = score_one_model(
-            truth, posterior, centers, references[model_index]
+            truth, posterior, centers, references[model_index], NORMALIZE
         )
         model_scores.append(scores)
         negative_scores.append(negative)
@@ -270,7 +276,7 @@ def main() -> None:
             "dimensions": 12_288,
             "image_shape": [64, 64, 3],
             "regions": NUM_RUNS,
-            "norm": True,
+            "norm": NORMALIZE,
             "center_distribution": "Uniform[0,1]^12288",
             "scoring_seed": SEED,
         },
@@ -329,11 +335,17 @@ def main() -> None:
     (ARTIFACTS / "environment.json").write_text(
         json.dumps(environment, indent=2) + "\n", encoding="utf-8"
     )
+    print(
+        json.dumps(
+            {"summary": raw_summary, "negative_control": negative, "environment": environment},
+            indent=2,
+        ),
+        flush=True,
+    )
     if raw_summary["observed_order"] != list(MODEL_NAMES):
         raise SystemExit("full-scale observed model ranking differs from the paper order")
     if not negative["negative_control_passed"]:
         raise SystemExit("broken-pairing negative control did not lower the true-model score")
-    print(json.dumps({"summary": raw_summary, "negative_control": negative, "environment": environment}, indent=2))
 
 
 if __name__ == "__main__":

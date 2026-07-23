@@ -38,6 +38,7 @@ def main() -> None:
         "paper_scale_N_64": summary["protocol"]["N"] == 64,
         "paper_scale_dimensions_12288": summary["protocol"]["dimensions"] == 12_288,
         "paper_scale_regions_100": summary["protocol"]["regions"] == 100,
+        "released_default_norm_false": summary["protocol"]["norm"] is False,
         "model_order_matches_paper": summary["observed_order"] == summary["paper_order"],
         "independent_checker_passed": (
             independent["model_order_matches_paper"]

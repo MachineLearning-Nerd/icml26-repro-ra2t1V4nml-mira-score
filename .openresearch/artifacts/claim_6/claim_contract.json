@@ -17,6 +17,7 @@
       "elliptical_prior_sigma_0_5_both_misspecified"
     ],
     "paper_score_tolerance": 0.03,
+    "normalization": "False: the released mira API default; the paper does not report overriding it",
     "uncertainty_rule": "Each paired 95% two-axis bootstrap interval for true minus misspecified score must exclude zero.",
     "negative_control_rule": "Rolling truth-to-observation pairing by one must lower the true-model score."
   },
