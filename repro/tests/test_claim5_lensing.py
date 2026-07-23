@@ -1,8 +1,13 @@
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
 import torch
 
-from claim5_lensing import (
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+from claim5_lensing import (  # noqa: E402
     PARAMETER_BOUNDS,
     SOURCE_NUISANCE_REGIMES,
     active_dimension,
