@@ -24,8 +24,12 @@ BASELINE_STEPS = (
     "repro/src/verify_claims_1_2.py",
     "repro/src/bayes_factor_audit.py",
     "repro/src/aggregate_full_gmm.py",
+    "repro/src/claim4_lower_bound.py",
+    "repro/src/check_claim4_independent.py",
+    "repro/src/verify_claim4.py",
     "repro/src/run_tests.py",
     "repro/src/verify_claims.py",
+    "repro/src/verify_campaign.py",
     "repro/src/build_evidence_bundle.py",
     "repro/src/build_reproduction_bundle.py",
 )

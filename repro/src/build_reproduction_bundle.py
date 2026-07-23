@@ -10,7 +10,16 @@ from zipfile import ZIP_DEFLATED, ZipFile
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "outputs"
-INCLUDE = ("README.md", "STATUS.md", "poster_embed.html", "docs", "repro", "upstream", "outputs")
+INCLUDE = (
+    "README.md",
+    "STATUS.md",
+    "poster_embed.html",
+    ".openresearch",
+    "docs",
+    "repro",
+    "upstream",
+    "outputs",
+)
 EXCLUDE_NAMES = {"reproduction_bundle.zip", "reproduction_bundle_manifest.json"}
 
 
