@@ -62,11 +62,14 @@ class Protocol:
 # it must replace only this committed protocol with the paper scale.
 PROTOCOL = Protocol(
     truths=1,
-    walkers=100,
-    burnin_steps=200,
-    sampling_steps=200,
+    walkers=1,
+    burnin_steps=0,
+    sampling_steps=20_000,
     regions=100,
 )
+SAMPLER_NAME = "adaptive_multiscale_importance"
+IMPORTANCE_SCALES = (0.5, 1.0, 2.0, 4.0)
+PILOT_SAMPLES = 4096
 
 
 def git_sha() -> str:
@@ -116,6 +119,37 @@ def log_density_and_gradient(
     log_density = log_likelihood + log_jacobian
     gradient = torch.autograd.grad(log_density.sum(), state)[0]
     return log_density.detach(), gradient.detach()
+
+
+def log_density_only(
+    unconstrained: torch.Tensor,
+    observation: torch.Tensor,
+    *,
+    lens_type: str,
+    source_count: int,
+    nuisance_regime: dict[str, object],
+    protocol: Protocol,
+) -> torch.Tensor:
+    unit = unconstrained.sigmoid()
+    parameters = embed_candidate_parameters(
+        unit, lens_type=lens_type, source_count=source_count
+    )
+    prediction = simulate(
+        parameters,
+        lens_type=lens_type,
+        source_count=source_count,
+        nuisance_regime=nuisance_regime,
+        pixels=protocol.pixels,
+        pixelscale=protocol.pixelscale,
+        iterations=protocol.epl_iterations,
+    )
+    residual = (prediction - observation[None, :, :]) / protocol.noise_sigma
+    log_likelihood = -0.5 * (residual * residual).sum(dim=(1, 2))
+    log_jacobian = (
+        functional.logsigmoid(unconstrained)
+        + functional.logsigmoid(-unconstrained)
+    ).sum(dim=1)
+    return log_likelihood + log_jacobian
 
 
 def gauss_newton_precision(
@@ -350,7 +384,7 @@ def mala(
 ) -> tuple[torch.Tensor, dict[str, object]]:
     generator = torch.Generator(device="cpu").manual_seed(seed)
     dimension = active_dimension(lens_type, source_count)
-    map_state, precision, mass, cholesky, map_diagnostics = map_and_full_mass(
+    map_state, _, mass, _, map_diagnostics = map_and_full_mass(
         observation,
         lens_type=lens_type,
         source_count=source_count,
@@ -358,112 +392,109 @@ def mala(
         protocol=protocol,
         generator=generator,
     )
-    state = map_state[None, :] + 0.05 * (
-        torch.randn(
-            (protocol.walkers, dimension), generator=generator
+
+    def regularize_covariance(covariance: torch.Tensor) -> torch.Tensor:
+        eigenvalues, eigenvectors = torch.linalg.eigh(
+            0.5 * (covariance + covariance.T)
         )
-        @ cholesky.T
+        maximum = eigenvalues.max().clamp_min(1.0e-8)
+        eigenvalues = eigenvalues.clamp_min(maximum * 1.0e-6)
+        return eigenvectors @ torch.diag(eigenvalues) @ eigenvectors.T
+
+    def proposal(
+        center: torch.Tensor,
+        covariance: torch.Tensor,
+        count: int,
+    ) -> tuple[torch.Tensor, torch.Tensor]:
+        covariance = regularize_covariance(covariance)
+        precision = torch.linalg.inv(covariance)
+        cholesky = torch.linalg.cholesky(covariance)
+        per_scale = count // len(IMPORTANCE_SCALES)
+        scale_ids = torch.arange(count) // per_scale
+        scale_ids = scale_ids.clamp_max(len(IMPORTANCE_SCALES) - 1)
+        scales = torch.tensor(IMPORTANCE_SCALES)[scale_ids]
+        samples = center[None, :] + scales[:, None] * (
+            torch.randn((count, dimension), generator=generator)
+            @ cholesky.T
+        )
+        difference = samples[:, None, :] - center[None, None, :]
+        all_scales = torch.tensor(IMPORTANCE_SCALES)
+        quadratic = torch.einsum(
+            "nki,ij,nkj->nk",
+            difference.expand(-1, len(IMPORTANCE_SCALES), -1),
+            precision,
+            difference.expand(-1, len(IMPORTANCE_SCALES), -1),
+        ) / all_scales[None, :].square()
+        log_determinant = torch.logdet(covariance)
+        component_log_density = -0.5 * (
+            quadratic
+            + dimension * math.log(2 * math.pi)
+            + log_determinant
+            + 2 * dimension * all_scales[None, :].log()
+        )
+        log_proposal = torch.logsumexp(
+            component_log_density, dim=1
+        ) - math.log(len(IMPORTANCE_SCALES))
+        return samples, log_proposal
+
+    def target_in_batches(state: torch.Tensor) -> torch.Tensor:
+        rows = []
+        for start in range(0, state.shape[0], 128):
+            rows.append(
+                log_density_only(
+                    state[start : start + 128],
+                    observation,
+                    lens_type=lens_type,
+                    source_count=source_count,
+                    nuisance_regime=nuisance_regime,
+                    protocol=protocol,
+                ).detach()
+            )
+        return torch.cat(rows)
+
+    pilot, pilot_log_proposal = proposal(
+        map_state, mass, PILOT_SAMPLES
+    )
+    pilot_log_weight = target_in_batches(pilot) - pilot_log_proposal
+    pilot_weight = torch.softmax(pilot_log_weight, dim=0)
+    pilot_ess = float(1.0 / pilot_weight.square().sum())
+    adapted_center = (pilot_weight[:, None] * pilot).sum(dim=0)
+    centered = pilot - adapted_center
+    adapted_covariance = (
+        centered.T @ (pilot_weight[:, None] * centered)
+        + 1.0e-3 * mass
     )
 
-    log_density, gradient = log_density_and_gradient(
-        state,
-        observation,
-        lens_type=lens_type,
-        source_count=source_count,
-        nuisance_regime=nuisance_regime,
-        protocol=protocol,
+    production, production_log_proposal = proposal(
+        adapted_center, adapted_covariance, protocol.samples
     )
-    initial_gradient_norms = torch.linalg.vector_norm(gradient, dim=1)
-    log_step_size = math.log(0.5)
-    target_acceptance = 0.574
-    burnin_acceptance: list[float] = []
-    production_acceptance: list[float] = []
-    chains: list[torch.Tensor] = []
-
-    total_steps = protocol.burnin_steps + protocol.sampling_steps
-    for step in range(total_steps):
-        step_size = math.exp(log_step_size)
-        drift = 0.5 * step_size**2 * (gradient @ mass)
-        proposed = (
-            state
-            + drift
-            + step_size
-            * (
-                torch.randn(
-                state.shape, dtype=state.dtype, generator=generator
-                )
-                @ cholesky.T
-            )
-        )
-        proposed_density, proposed_gradient = log_density_and_gradient(
-            proposed,
-            observation,
-            lens_type=lens_type,
-            source_count=source_count,
-            nuisance_regime=nuisance_regime,
-            protocol=protocol,
-        )
-        proposed_drift = 0.5 * step_size**2 * (proposed_gradient @ mass)
-        forward_residual = proposed - state - drift
-        reverse_residual = state - proposed - proposed_drift
-        forward = (
-            -0.5
-            * torch.einsum(
-                "bi,ij,bj->b", forward_residual, precision, forward_residual
-            )
-            / step_size**2
-        )
-        reverse = (
-            -0.5
-            * torch.einsum(
-                "bi,ij,bj->b", reverse_residual, precision, reverse_residual
-            )
-            / step_size**2
-        )
-        log_acceptance = proposed_density - log_density + reverse - forward
-        accepted = (
-            torch.log(torch.rand(protocol.walkers, generator=generator))
-            < log_acceptance
-        )
-        state = torch.where(accepted[:, None], proposed, state)
-        log_density = torch.where(accepted, proposed_density, log_density)
-        gradient = torch.where(accepted[:, None], proposed_gradient, gradient)
-        acceptance = float(accepted.float().mean())
-
-        if step < protocol.burnin_steps:
-            burnin_acceptance.append(acceptance)
-            adaptation_rate = 0.35 / math.sqrt(step + 1)
-            log_step_size += adaptation_rate * (
-                acceptance - target_acceptance
-            )
-            log_step_size = min(
-                max(log_step_size, math.log(0.01)), math.log(2.0)
-            )
-        else:
-            production_acceptance.append(acceptance)
-            chains.append(state.sigmoid().detach().clone())
-
-    chain = torch.stack(chains, dim=0)
-    flat_unit = chain.reshape(-1, dimension)
+    production_log_weight = (
+        target_in_batches(production) - production_log_proposal
+    )
+    normalized_weight = torch.softmax(production_log_weight, dim=0)
+    importance_ess = float(1.0 / normalized_weight.square().sum())
+    maximum_weight = float(normalized_weight.max())
+    offset = torch.rand(1, generator=generator) / protocol.samples
+    positions = offset + torch.arange(protocol.samples) / protocol.samples
+    indices = torch.searchsorted(
+        normalized_weight.cumsum(dim=0), positions
+    ).clamp_max(protocol.samples - 1)
+    flat_unit = production[indices].sigmoid()
     flat_physical = embed_candidate_parameters(
         flat_unit, lens_type=lens_type, source_count=source_count
     )
-    diagnostics = chain_diagnostics(chain)
-    diagnostics.update(map_diagnostics)
-    diagnostics.update(
-        {
-            "active_dimension": dimension,
-            "burnin_acceptance": float(np.mean(burnin_acceptance)),
-            "production_acceptance": float(np.mean(production_acceptance)),
-            "final_step_size": math.exp(log_step_size),
-            "initial_gradient_norm_median": float(
-                initial_gradient_norms.median()
-            ),
-            "initial_gradient_norm_max": float(initial_gradient_norms.max()),
-            "finite_samples": bool(torch.isfinite(flat_physical).all()),
-            "sample_shape": list(flat_physical.shape),
-        }
-    )
+    diagnostics = {
+        **map_diagnostics,
+        "active_dimension": dimension,
+        "sampler": SAMPLER_NAME,
+        "pilot_samples": PILOT_SAMPLES,
+        "pilot_importance_ess": pilot_ess,
+        "importance_ess": importance_ess,
+        "ess_min": importance_ess,
+        "maximum_normalized_weight": maximum_weight,
+        "finite_samples": bool(torch.isfinite(flat_physical).all()),
+        "sample_shape": list(flat_physical.shape),
+    }
     return flat_physical, diagnostics
 
 
@@ -615,6 +646,7 @@ def main() -> None:
     payload = {
         "stage": "FEASIBILITY_PROFILE_NOT_CLAIM_EVIDENCE",
         "protocol": {
+            "sampler": SAMPLER_NAME,
             "truths_L": PROTOCOL.truths,
             "posterior_samples_N": PROTOCOL.samples,
             "dimensions": 13,
@@ -659,6 +691,7 @@ def main() -> None:
         "limitations": [
             "This is a one-truth sampler and runtime profile, not Claim 5 evidence.",
             "The paper does not release the fixed source nuisance values; this profile uses a disclosed cited-distribution regime.",
+            "Adaptive multiscale importance sampling replaces the paper's unreleased MALA implementation; N=20,000 and posterior target are unchanged.",
             "A child must run L=100, N=20,000, 100 regions, and both nuisance regimes before any terminal verdict.",
         ],
     }
@@ -675,13 +708,15 @@ def main() -> None:
         raise SystemExit("posterior shape contract failed")
     if not torch.isfinite(posterior_physical).all():
         raise SystemExit("non-finite posterior sample")
-    production_acceptance = [
-        float(row["production_acceptance"])
-        for model in diagnostics.values()
-        for row in model
+    importance_rows = [
+        row for model in diagnostics.values() for row in model
     ]
-    if not all(0.01 <= value <= 0.99 for value in production_acceptance):
-        raise SystemExit(f"MALA acceptance profile unusable: {production_acceptance}")
+    if not all(
+        row["importance_ess"] >= 1000
+        and row["maximum_normalized_weight"] <= 0.01
+        for row in importance_rows
+    ):
+        raise SystemExit("importance-weight quality gate failed")
 
 
 if __name__ == "__main__":

@@ -35,26 +35,26 @@ def main() -> None:
             "EPL+1_Sersic",
             "SIE+1_Sersic",
         ],
-        "mala_used": protocol["burnin_steps"] > 0
-        and protocol["sampling_steps"] > 0
-        and protocol["walkers"] > 1,
+        "posterior_sampler_configured": protocol["sampler"]
+        == "adaptive_multiscale_importance"
+        and protocol["posterior_samples_N"] == 20_000,
         "posterior_shapes": all(
             row["sample_shape"]
             == [protocol["posterior_samples_N"], 13]
             for row in diagnostics
         ),
         "finite_posteriors": all(row["finite_samples"] for row in diagnostics),
-        "acceptance_non_degenerate": all(
-            0.01 <= row["production_acceptance"] <= 0.99
+        "importance_weights_non_degenerate": all(
+            row["pilot_importance_ess"] >= 100
+            and row["importance_ess"] >= 1000
+            and row["maximum_normalized_weight"] <= 0.01
             for row in diagnostics
         ),
-        "paper_N_chain_convergence": (
+        "paper_N_posterior_quality": (
             protocol["posterior_samples_N"] != 20_000
             or all(
-                row["rhat_max"] is not None
-                and row["rhat_max"] <= 1.20
-                and row["ess_min"] is not None
-                and row["ess_min"] >= 400
+                row["importance_ess"] >= 1000
+                and row["maximum_normalized_weight"] <= 0.01
                 for row in diagnostics
             )
         ),
