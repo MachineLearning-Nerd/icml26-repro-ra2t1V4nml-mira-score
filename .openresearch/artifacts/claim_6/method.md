@@ -18,6 +18,11 @@ bootstrap that resamples both the 100 regions and 16 fiducials. A separate
 standard-library checker recomputes aggregates, ranking, and paper deltas from
 the CSV without importing torch or scoring code.
 
+One complete 12,288-dimensional region for the true model is also evaluated
+with the unmodified released `mira_score.mira` function using an identical
+seed. The optimized implementation must agree within one discrete aggregate
+count quantum, `1/(64×16)`.
+
 The protocol ambiguity is tested in a retained sibling run using `norm=True`.
 The negative control rolls truth-to-observation correspondence by one
 fiducial, while retaining the posterior regions, and requires the broken

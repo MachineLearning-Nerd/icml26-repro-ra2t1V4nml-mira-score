@@ -15,6 +15,7 @@ from time import perf_counter
 
 import numpy as np
 import torch
+from mira_score import mira
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -29,6 +30,7 @@ NUM_RUNS = 100
 NORMALIZE = False
 SEED = 260502014
 BOOTSTRAP_SEED = 620052014
+PARITY_SEED = 1260502014
 BOOTSTRAP_REPLICATES = 10_000
 MODEL_NAMES = (
     "spiral_prior_sigma_2_true",
@@ -202,6 +204,42 @@ def git_sha() -> str:
     ).stdout.strip()
 
 
+def released_implementation_parity(truth: torch.Tensor) -> dict[str, object]:
+    """Compare one full-scale region against the released implementation."""
+    posterior = load_tensor("posterior0.pt").reshape(16, 64, 3 * 64 * 64)
+    torch.manual_seed(PARITY_SEED)
+    official_mean, _ = mira(
+        truth,
+        posterior[None, :, :, :],
+        num_runs=1,
+        norm=NORMALIZE,
+        disable_tqdm=True,
+        device=torch.device("cpu"),
+    )
+    torch.manual_seed(PARITY_SEED)
+    centers = torch.rand((1, 16, 3 * 64 * 64))
+    references = torch.randint(0, 64, (1, 16))
+    optimized, _ = score_one_model(
+        truth, posterior, centers, references, NORMALIZE
+    )
+    optimized_mean = optimized.mean()
+    delta = abs(float(official_mean[0]) - float(optimized_mean))
+    # One changed integer count changes the aggregate by exactly 1/(64*16).
+    score_quantum = 1 / (64 * 16)
+    payload = {
+        "scope": "one region, one model, L=16, N=64, dimensions=12288",
+        "seed": PARITY_SEED,
+        "released_implementation_score": float(official_mean[0]),
+        "optimized_implementation_score": float(optimized_mean),
+        "absolute_delta": delta,
+        "single_count_score_quantum": score_quantum,
+        "within_one_count_quantum": delta <= score_quantum + 1e-12,
+    }
+    if not payload["within_one_count_quantum"]:
+        raise SystemExit("full-scale released implementation parity failed")
+    return payload
+
+
 def main() -> None:
     started = perf_counter()
     torch.set_grad_enabled(False)
@@ -224,6 +262,7 @@ def main() -> None:
         model_scores.append(scores)
         negative_scores.append(negative)
         del posterior
+    parity = released_implementation_parity(truth)
     per_truth = torch.stack(model_scores, dim=1).numpy()  # (runs, models, truths)
     negative_per_truth = torch.stack(negative_scores, dim=1).numpy()
 
@@ -300,6 +339,9 @@ def main() -> None:
         + "\n",
         encoding="utf-8",
     )
+    (ARTIFACTS / "implementation_parity.json").write_text(
+        json.dumps(parity, indent=2) + "\n", encoding="utf-8"
+    )
 
     negative_run_scores = negative_per_truth.mean(axis=2)
     negative_means = negative_run_scores.mean(axis=0)
@@ -329,7 +371,7 @@ def main() -> None:
         "logical_cpu_count": os.cpu_count(),
         "torch_threads": torch.get_num_threads(),
         "device": "cpu",
-        "deterministic_seeds": [SEED, BOOTSTRAP_SEED],
+        "deterministic_seeds": [SEED, BOOTSTRAP_SEED, PARITY_SEED],
         "runtime_seconds": perf_counter() - started,
     }
     (ARTIFACTS / "environment.json").write_text(
@@ -337,7 +379,12 @@ def main() -> None:
     )
     print(
         json.dumps(
-            {"summary": raw_summary, "negative_control": negative, "environment": environment},
+            {
+                "summary": raw_summary,
+                "implementation_parity": parity,
+                "negative_control": negative,
+                "environment": environment,
+            },
             indent=2,
         ),
         flush=True,

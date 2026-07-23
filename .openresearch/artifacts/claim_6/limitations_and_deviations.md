@@ -15,6 +15,9 @@
 - The paper's plotted error bars are hardcoded in its plotting notebook and
   are not labeled with a precise estimator there. We report both the
   across-region standard deviation and a paired two-axis bootstrap interval.
+- The exact released-default evaluation recovers the full published ordering,
+  but not every hardcoded score: the largest absolute difference is retained
+  as a numerical divergence rather than hidden or relabeled as agreement.
 - The independent checker verifies aggregation and the claimed ranking. Small
   implementation parity cells for the released MIRA routine remain covered by
   the cumulative Claim 1–3 regression suite.
