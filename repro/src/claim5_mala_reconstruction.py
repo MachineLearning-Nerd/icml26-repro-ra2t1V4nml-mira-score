@@ -159,7 +159,8 @@ def mala(
         nuisance_regime=nuisance_regime,
         protocol=protocol,
     )
-    log_step_size = math.log(0.08)
+    initial_gradient_norms = torch.linalg.vector_norm(gradient, dim=1)
+    log_step_size = math.log(0.003)
     target_acceptance = 0.574
     burnin_acceptance: list[float] = []
     production_acceptance: list[float] = []
@@ -208,7 +209,9 @@ def mala(
             log_step_size += adaptation_rate * (
                 acceptance - target_acceptance
             )
-            log_step_size = min(max(log_step_size, math.log(0.002)), math.log(0.5))
+            log_step_size = min(
+                max(log_step_size, math.log(0.00005)), math.log(0.1)
+            )
         else:
             production_acceptance.append(acceptance)
             chains.append(state.sigmoid().detach().clone())
@@ -225,6 +228,10 @@ def mala(
             "burnin_acceptance": float(np.mean(burnin_acceptance)),
             "production_acceptance": float(np.mean(production_acceptance)),
             "final_step_size": math.exp(log_step_size),
+            "initial_gradient_norm_median": float(
+                initial_gradient_norms.median()
+            ),
+            "initial_gradient_norm_max": float(initial_gradient_norms.max()),
             "finite_samples": bool(torch.isfinite(flat_physical).all()),
             "sample_shape": list(flat_physical.shape),
         }
