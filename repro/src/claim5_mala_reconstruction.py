@@ -48,6 +48,7 @@ class Protocol:
     burnin_steps: int
     sampling_steps: int
     regions: int
+    retained_stride: int = 1
     pixels: int = 100
     pixelscale: float = 0.05
     noise_sigma: float = 1.0
@@ -55,7 +56,10 @@ class Protocol:
 
     @property
     def samples(self) -> int:
-        return self.walkers * self.sampling_steps
+        retained_steps = (
+            self.sampling_steps + self.retained_stride - 1
+        ) // self.retained_stride
+        return self.walkers * retained_steps
 
 
 # This branch is deliberately a feasibility profile. The child promoted from
@@ -63,9 +67,10 @@ class Protocol:
 PROTOCOL = Protocol(
     truths=1,
     walkers=32,
-    burnin_steps=500,
-    sampling_steps=625,
+    burnin_steps=1000,
+    sampling_steps=2500,
     regions=100,
+    retained_stride=4,
 )
 SAMPLER_NAME = "affine_invariant_stretch"
 STRETCH_SCALE = 2.0
@@ -436,7 +441,7 @@ def mala(
             chains.append(state.sigmoid().detach().clone())
 
     chain = torch.stack(chains, dim=0)
-    flat_unit = chain.reshape(-1, dimension)
+    flat_unit = chain[:: protocol.retained_stride].reshape(-1, dimension)
     flat_physical = embed_candidate_parameters(
         flat_unit, lens_type=lens_type, source_count=source_count
     )
@@ -616,6 +621,7 @@ def main() -> None:
             "walkers": PROTOCOL.walkers,
             "burnin_steps": PROTOCOL.burnin_steps,
             "sampling_steps": PROTOCOL.sampling_steps,
+            "retained_stride": PROTOCOL.retained_stride,
             "pixels": [PROTOCOL.pixels, PROTOCOL.pixels],
             "pixelscale_arcsec": PROTOCOL.pixelscale,
             "noise": f"N(0,{PROTOCOL.noise_sigma:g}) independently per pixel",
